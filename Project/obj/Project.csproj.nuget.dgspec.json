@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\C#\\Proj\\FirstAidClinic\\Project\\Project.csproj": {}
+    "H:\\C#\\Proj\\BabyCare\\Project\\Project.csproj": {}
   },
   "projects": {
-    "H:\\C#\\Proj\\FirstAidClinic\\Project\\Project.csproj": {
+    "H:\\C#\\Proj\\BabyCare\\Project\\Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\C#\\Proj\\FirstAidClinic\\Project\\Project.csproj",
+        "projectUniqueName": "H:\\C#\\Proj\\BabyCare\\Project\\Project.csproj",
         "projectName": "Project",
-        "projectPath": "H:\\C#\\Proj\\FirstAidClinic\\Project\\Project.csproj",
+        "projectPath": "H:\\C#\\Proj\\BabyCare\\Project\\Project.csproj",
         "packagesPath": "C:\\Users\\גולדברג דינה ברכה\\.nuget\\packages\\",
-        "outputPath": "H:\\C#\\Proj\\FirstAidClinic\\Project\\obj\\",
+        "outputPath": "H:\\C#\\Proj\\BabyCare\\Project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
