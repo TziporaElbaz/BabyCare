@@ -12,4 +12,10 @@
     <Folder Include="API\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Database.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
