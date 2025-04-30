@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "H:\\פרוייקטטטטט\\BabyCare\\Project\\Project.csproj": {}
+    "H:\\c#\\BabyCare\\Project\\Project.csproj": {}
   },
   "projects": {
-    "H:\\פרוייקטטטטט\\BabyCare\\Project\\Project.csproj": {
+    "H:\\c#\\BabyCare\\Project\\Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\פרוייקטטטטט\\BabyCare\\Project\\Project.csproj",
+        "projectUniqueName": "H:\\c#\\BabyCare\\Project\\Project.csproj",
         "projectName": "Project",
-        "projectPath": "H:\\פרוייקטטטטט\\BabyCare\\Project\\Project.csproj",
-        "packagesPath": "C:\\Users\\וייסברג נעה\\.nuget\\packages\\",
-        "outputPath": "H:\\פרוייקטטטטט\\BabyCare\\Project\\obj\\",
+        "projectPath": "H:\\c#\\BabyCare\\Project\\Project.csproj",
+        "packagesPath": "C:\\Users\\אלבז צפורה\\.nuget\\packages\\",
+        "outputPath": "H:\\c#\\BabyCare\\Project\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\וייסברג נעה\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\אלבז צפורה\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
