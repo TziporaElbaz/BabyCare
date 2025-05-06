@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Project.DAL.API;
 using Project.models;
 
 namespace Project.DAL.services
 {
-    public class BabyManagementDAL
+    public class BabyManagementDAL : IBabyManagementDAL
     {
         private readonly DbContext _context;
 
