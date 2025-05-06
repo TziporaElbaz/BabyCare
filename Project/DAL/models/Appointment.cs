@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.DAL.models;
+using System;
 using System.Collections.Generic;
 
 namespace Project.models;

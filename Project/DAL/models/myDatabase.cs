@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Project.models;
+namespace Project.DAL.models;
 
 public partial class myDatabase : DbContext
 {
     public myDatabase()
     {
+        public class BabyVaccineRepository : IBabyVaccineRepository
+    {
+        private readonly YourDbContext _context;
+
+        public BabyVaccineRepository(YourDbContext context)
+        {
+            _context = context;
+        }
+
     }
 
     public myDatabase(DbContextOptions<myDatabase> options)

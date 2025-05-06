@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Project.DAL.models;
+using System;
 using System.Collections.Generic;
 
 namespace Project.models;
 
-public partial class AvailableAppointment
+public partial class WorkerShift
 {
     public int Id { get; set; }
 
     public int WorkerId { get; set; }
 
-    public DateOnly AppointmentDate { get; set; }
+    public int ShiftId { get; set; }
 
-    public TimeOnly StartTime { get; set; }
-
-    public TimeOnly EndTime { get; set; }
+    public virtual Shift Shift { get; set; } = null!;
 
     public virtual Worker Worker { get; set; } = null!;
 }
