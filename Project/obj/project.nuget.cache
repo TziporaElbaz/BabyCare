@@ -1,6 +1,5 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "IxSzIkFzfcA=",
   "success": true,
   "projectFilePath": "H:\\פרוייקטטטטט\\BabyCare\\Project\\Project.csproj",
@@ -81,11 +80,12 @@
     "C:\\Users\\וייסברג נעה\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\וייסברג נעה\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-=======
-  "dgSpecHash": "N2+UgiFUZvs=",
-  "success": true,
-  "projectFilePath": "H:\\c#\\BabyCare\\Project\\Project.csproj",
-  "expectedPackageFiles": [],
->>>>>>> 04a407f710c6818b411ab41e1316804ccaaa622b
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file H:\\פרוייקטטטטט\\BabyCare\\Project\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
