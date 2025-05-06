@@ -1,7 +1,8 @@
-﻿ using global::Project.models;
- using Project.models;
+﻿
 
-    namespace Project.DAL.API
+using Project.Models;
+
+namespace Project.DAL.API
     {
         public interface IBabyManagementDAL
         {

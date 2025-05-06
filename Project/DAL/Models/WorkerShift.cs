@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project.models;
+namespace Project.Models;
 
 public partial class WorkerShift
 {
@@ -14,4 +14,8 @@ public partial class WorkerShift
     public virtual Shift Shift { get; set; } = null!;
 
     public virtual Worker Worker { get; set; } = null!;
+    public WorkerShift( Shift shift, Worker worker)
+    {   
+
+    }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project.models;
+namespace Project.Models;
 
 public partial class AvailableAppointment
 {

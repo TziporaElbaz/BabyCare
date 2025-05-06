@@ -1,10 +1,11 @@
-﻿using Project.models;
+﻿
+using Project.Models;
 
 namespace Project.DAL.API
 {
     public interface IWorkerShiftManagementDAL
     {
-        Task AddWorkerShiftAsync(WorkerShift workerShift);
+        Task AddWorkerShiftAsync(Worker worker, Shift shift);
         Task DeleteWorkerShiftAsync(int id);
         Task<List<WorkerShift>> GetAllWorkerShiftsAsync();
         Task<WorkerShift?> GetWorkerShiftByIdAsync(int id);

@@ -1,6 +1,8 @@
-﻿using Project.DAL.models;
+﻿
 
-namespace Project.DAL.services
+using Project.Models;
+
+namespace Project.DAL.API
 {
     public interface IWorkersManagmentDAL
     {

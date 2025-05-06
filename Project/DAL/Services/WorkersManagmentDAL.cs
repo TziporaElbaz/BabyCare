@@ -1,10 +1,11 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Project.DAL.models;
+using Project.DAL.API;
+using Project.Models;
 
-namespace Project.DAL.services
+namespace Project.DAL.Services
 {
-    public class WorkersManagmentDAL : IWorkersManagmentDAL, IWorkersManagmentDAL
+    public class WorkersManagmentDAL : IWorkersManagmentDAL
     {
         private readonly DbContext _context;
 

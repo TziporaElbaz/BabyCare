@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project.DAL.API;
-using Project.models;
+using Project.Models;
 
-namespace Project.DAL.services
+namespace Project.DAL.Services
 {
     public class VaccineManagementDAL : IVaccineManagementDAL
     {

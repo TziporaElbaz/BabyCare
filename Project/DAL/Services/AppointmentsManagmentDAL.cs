@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project.DAL.models;
+using Project.DAL.API;
 
-namespace Project.DAL.services
+using Project.Models;
+
+namespace Project.DAL.Services
 {
     public class AppointmentManagementDAL : IAppointmentManagementDAL
     {
@@ -81,6 +83,36 @@ namespace Project.DAL.services
                 a.AppointmentDate == date &&
                 ((startTime >= a.StartTime && startTime < a.EndTime) ||
                  (endTime > a.StartTime && endTime <= a.EndTime)));
+        }
+
+        public Task AddAppointmentAsync(Appointment appointment)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Appointment>> IAppointmentManagementDAL.GetAllAppointmentsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Appointment?> IAppointmentManagementDAL.GetAppointmentByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Appointment?> IAppointmentManagementDAL.GetAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Appointment>> IAppointmentManagementDAL.GetAppointmentsByDateAsync(DateOnly date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAppointmentAsync(Appointment updatedAppointment)
+        {
+            throw new NotImplementedException();
         }
     }
 }
