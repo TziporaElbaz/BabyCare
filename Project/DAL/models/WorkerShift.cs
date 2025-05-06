@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Project.models;
+namespace Project.DAL.models;
 
 public partial class WorkerShift
 {

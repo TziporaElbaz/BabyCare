@@ -4,11 +4,11 @@ using Project.DAL.models;
 
 namespace Project.DAL.services
 {
-    public class WorkersManagmentDAL : IWorkersManagmentDAL, IWorkersManagmentDAL
+    public class WorkersManagementDAL : IWorkersManagementDAL
     {
         private readonly DbContext _context;
 
-        public WorkersManagmentDAL(DbContext context)
+        public WorkersManagementDAL(DbContext context)
         {
             _context = context;
         }
