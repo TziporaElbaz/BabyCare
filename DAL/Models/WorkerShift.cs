@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project.Models;
+namespace WEB_API.Models;
 
 public partial class WorkerShift
 {

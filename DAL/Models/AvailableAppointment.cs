@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.Models;
+using WEB_API.Models;
 
-namespace Project.DAL.Models;
+namespace WEB_API.DAL.Models;
 
 public partial class AvailableAppointment
 {

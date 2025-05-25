@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Project.DAL.Models;
+using WEB_API.DAL.Models;
 
-namespace Project.Models;
+namespace WEB_API.Models;
 
 public partial class Worker
 {

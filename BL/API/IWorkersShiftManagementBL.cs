@@ -1,6 +1,6 @@
-﻿using Project.Models;
+﻿using WEB_API.Models;
 
-namespace Project.BL.API
+namespace WEB_API.BL.API
 {
     public interface IWorkersShiftManagementBL
     {

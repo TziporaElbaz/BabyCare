@@ -1,11 +1,11 @@
-﻿using Project.BL.API;
-using Project.DAL.API;
-using Project.Models;
+﻿using WEB_API.BL.API;
+using WEB_API.DAL.API;
+using WEB_API.Models;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using Project.DAL.Models;
+using WEB_API.DAL.Models;
 
-namespace Project.BL.Services
+namespace WEB_API.BL.Services
 {
     public class WorkersShiftsManagementBL:IWorkersShiftManagementBL
     {

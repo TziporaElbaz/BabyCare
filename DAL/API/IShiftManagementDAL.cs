@@ -1,7 +1,7 @@
 ﻿
-using Project.Models;
+using WEB_API.Models;
 
-namespace Project.DAL.API
+namespace WEB_API.DAL.API
 {
     public interface IShiftManagementDAL
     {

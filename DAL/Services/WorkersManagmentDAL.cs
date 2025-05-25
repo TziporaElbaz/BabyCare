@@ -1,9 +1,9 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Project.DAL.API;
-using Project.Models;
+using WEB_API.DAL.API;
+using WEB_API.Models;
 
-namespace Project.DAL.Services
+namespace WEB_API.DAL.Services
 {
     public class WorkersManagmentDAL : IWorkersManagmentDAL
     {
