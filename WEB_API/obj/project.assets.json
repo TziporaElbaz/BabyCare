@@ -5375,23 +5375,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\גולדברג דינה ברכה\\.nuget\\packages\\": {},
+    "C:\\Users\\וייסברג נעה\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\C#\\Proj\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "projectUniqueName": "H:\\פרויקטטטט סופי\\BabyCare\\WEB_API\\WEB_API.csproj",
       "projectName": "WEB_API",
-      "projectPath": "H:\\C#\\Proj\\BabyCare\\WEB_API\\WEB_API.csproj",
-      "packagesPath": "C:\\Users\\גולדברג דינה ברכה\\.nuget\\packages\\",
-      "outputPath": "H:\\C#\\Proj\\BabyCare\\WEB_API\\obj\\",
+      "projectPath": "H:\\פרויקטטטט סופי\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "packagesPath": "C:\\Users\\וייסברג נעה\\.nuget\\packages\\",
+      "outputPath": "H:\\פרויקטטטט סופי\\BabyCare\\WEB_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\גולדברג דינה ברכה\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\וייסברג נעה\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5407,11 +5407,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj": {
-              "projectPath": "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj"
+            "H:\\פרויקטטטט סופי\\BabyCare\\BL\\BL.csproj": {
+              "projectPath": "H:\\פרויקטטטט סופי\\BabyCare\\BL\\BL.csproj"
             },
-            "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj": {
-              "projectPath": "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj"
+            "H:\\פרויקטטטט סופי\\BabyCare\\DAL\\DAL.csproj": {
+              "projectPath": "H:\\פרויקטטטט סופי\\BabyCare\\DAL\\DAL.csproj"
             }
           }
         }
