@@ -35,14 +35,22 @@ namespace BL.Models
 
         public double Height { get; set; }
         public bool Gender { get; set; }
-        public async Task<double> GetWeightPercentileAsync()
+
+
+        public double WeightPercentile
         {
-            return await babyManagementBL.GetWeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Weight);
+            get
+            {
+                return  babyManagementBL.GetWeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Weight).Result;
+            }
         }
 
-        public async Task<double> GetHeightPercentileAsync()
+        public double HeightPercentile
         {
-            return await babyManagementBL.GetHeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Height);
+            get
+            {
+                return  babyManagementBL.GetHeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Height).Result;
+            }
         }
 
 
