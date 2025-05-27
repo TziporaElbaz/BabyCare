@@ -10,9 +10,9 @@ namespace BL.Models
 {
     public class BabyBL
     {
-        IBabyServiceBL babyServiceBL;
-        public BabyBL(IBabyServiceBL _babyServiceBL) {
-            babyServiceBL= _babyServiceBL;
+        IBabyManagementBL babyManagementBL;
+        public BabyBL(IBabyManagementBL _babyManagementBL) {
+            babyManagementBL = _babyManagementBL;
         } 
         public int Id { get; set; }
 
@@ -35,20 +35,16 @@ namespace BL.Models
 
         public double Height { get; set; }
         public bool Gender { get; set; }
-        public double WeightPercentile
+        public async Task<double> GetWeightPercentileAsync()
         {
-            get
-            {
-                return babyServiceBL.GetPercentile(Gender,babyServiceBL.BabysCurrentAge(BabyId), Weight);
-            }
+            return await babyManagementBL.GetWeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Weight);
         }
-        public double HeightPercentile
+
+        public async Task<double> GetHeightPercentileAsync()
         {
-            get
-            {
-                return babyServiceBL.GetHeightPercentile(Gender, babyServiceBL.BabysCurrentAge(BabyId), Height);
-            }
+            return await babyManagementBL.GetHeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Height);
         }
+
 
     }
 }
