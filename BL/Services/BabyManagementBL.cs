@@ -9,6 +9,7 @@ using Azure;
 using BL.API;
 using DAL.API;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using WEB_API.DAL.API;
 using WEB_API.Models;
 using static System.Net.WebRequestMethods;
@@ -17,7 +18,7 @@ namespace BL.Services
 
 
 {
-    public class BabyManagementBL : IBabyServiceBL
+    public class BabyManagementBL :IBabyManagementBL
     {
       
         private IBabyManagementDAL babyManagementDAL;
@@ -38,19 +39,34 @@ namespace BL.Services
             ((System.DateTime.Now.Year - baby.Birthdate.Year) * 12 + System.DateTime.Now.Month - baby.Birthdate.Month) :
             ((System.DateTime.Now.Year - baby.Birthdate.Year) * 12 + 12 - baby.Birthdate.Month + System.DateTime.Now.Month);
         }
- 
-            public double GetHeightPercentile(bool gender, int ageMounths, double height)
+
+        public async Task<double> GetWeightPercentile(bool gender, int ageMonths, double weight)
         {
             string genderString = gender ? "male" : "female";
+            string url = $"https://growthcalculator.org/api/weight_for_age_percentile?sex={genderString}&age={ageMonths}&age_unit=months&weight={weight}";
 
-            string url = $"https://growthcalculator.org/api/height_for_age_percentile?sex={genderString}&age={ageMounths}&age_unit=months&height={height}";
-            return ;
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+                var jObject = JObject.Parse(json);
+                double percentile = (double)jObject["percentile"];
+                return percentile;
+            }
         }
-        public double GetPercentile(bool gender, int ageMounths, double weight)
-        { string genderString = gender ? "male" : "female";
-          string url = $"https://growthcalculator.org/api/weight_for_age_percentile?sex={genderString}&age={ageMounths}&age_unit=months&weight={weight}";
-            return;
+        public async Task<double> GetHeightPercentile(bool gender, int ageMonths, double height)
+        {
+            string genderString = gender ? "male" : "female";
+            string url = $"https://growthcalculator.org/api/height_for_age_percentile?sex={genderString}&age={ageMonths}&age_unit=months&height={height}";
 
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+                var jObject = JObject.Parse(json);
+                double percentile = (double)jObject["percentile"];
+                return percentile;
+            }
         }
     }
 }
