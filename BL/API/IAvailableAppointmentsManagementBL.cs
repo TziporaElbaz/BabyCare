@@ -3,6 +3,6 @@
     public interface IAvailableAppointmentsManagementBL
     {
         Task AddAvailableAppointmentsToWorkers(DateTime day);
-        bool IsHoliday(DateTime date);
+        Task<bool> IsHoliday(DateTime date);
     }
 }

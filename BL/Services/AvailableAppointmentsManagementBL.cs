@@ -16,44 +16,30 @@ namespace WEB_API.BL.Services
     public class AvailableAppointmentsManagementBL : IAvailableAppointmentsManagementBL
     {
         private static readonly string _baseUrl = "https://www.hebcal.com/hebcal";
-        private readonly IWorkerShiftManagementDAL shiftWorkerManager;
-        private readonly IShiftManagementDAL shiftManager;
-        private readonly IConfiguration configuration;
-        private readonly IMapper mapper;
-        private readonly IAvailableAppointmentManagementDAL dal;
+        private readonly IWorkerShiftManagementDAL _shiftWorkerManager;
+        private readonly IShiftManagementDAL _shiftManager;
+        private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
+        private readonly IAvailableAppointmentManagementDAL _dal;
+        private readonly HttpClient _httpClient; 
 
-        public AvailableAppointmentsManagementBL(IWorkerShiftManagementDAL _shiftWorkerManagement, IShiftManagementDAL _shiftManager, IConfiguration _configuration, IMapper _mapper, IAvailableAppointmentManagementDAL _dal)
+        public AvailableAppointmentsManagementBL(
+            IWorkerShiftManagementDAL shiftWorkerManager,
+            IShiftManagementDAL shiftManager,
+            IConfiguration configuration,
+            IMapper mapper,
+            IAvailableAppointmentManagementDAL dal,
+            HttpClient httpClient)
         {
-            shiftWorkerManager = _shiftWorkerManagement;
-            shiftManager = _shiftManager;
-            configuration = _configuration;
-            mapper = _mapper;
-            dal = _dal;
+            _shiftWorkerManager = shiftWorkerManager;
+            _shiftManager = shiftManager;
+            _configuration = configuration;
+            _mapper = mapper;
+            _dal = dal;
+            _httpClient = httpClient; 
         }
-        //public void GenerateAvailableAppointments(DateTime startDate, DateTime endDate)
-        //{
 
-        //    for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
-        //    {
-        //        //// בדיקה אם זה שבת
-        //        //if (date.DayOfWeek == DayOfWeek.Saturday|| date.DayOfWeek == DayOfWeek.Friday)
-        //        //    continue;
-
-        //        if (!isHoliday(date))
-        //            BuildAppointments(date);
-        //    }
-
-        //}
-        //    public async Task a() { 
-        //    DateTime date = new DateTime(2025, 5, 1);
-        //    bool isHoliday = await IsHolidayAsync(date);
-
-        //    Console.WriteLine(isHoliday
-        //        ? "is holiday!"
-        //        : "is not holiday.");
-        //}
-
-        public bool IsHoliday(DateTime date)
+        public async Task<bool> IsHoliday(DateTime date)
         {
             string year = date.Year.ToString();
             string month = date.Month.ToString("D2");
@@ -61,60 +47,52 @@ namespace WEB_API.BL.Services
 
             var url = $"{_baseUrl}?v=1&cfg=json&year={year}&month={month}&maj=on&min=off&mod=on&nx=off";
 
-            using (HttpClient client = new HttpClient())
+            var response = await _httpClient.GetAsync(url); // שימוש ב-HttpClient המוזרק
+
+            if (response.IsSuccessStatusCode)
             {
-                var response = client.GetAsync(url).Result;
+                var jsonString = await response.Content.ReadAsStringAsync(); // await במקום .Result
+                var json = JObject.Parse(jsonString);
 
-                if (response.IsSuccessStatusCode)
+                var items = json["items"];
+                if (items != null)
                 {
-                    var jsonString = response.Content.ReadAsStringAsync().Result;
-                    var json = JObject.Parse(jsonString);
-
-                    var items = json["items"];
-                    Console.WriteLine(items);
-                    if (items != null)
+                    foreach (var item in items)
                     {
-                        foreach (var item in items)
+                        var holidayDate = DateTime.Parse(item["date"].ToString());
+                        if (holidayDate.Date == date.Date)
                         {
-                            var holidayDate = DateTime.Parse(item["date"].ToString());
-                            if (holidayDate.Date == date.Date)
+                            if (item["title"].ToString().Equals("Yom HaAtzma'ut", StringComparison.OrdinalIgnoreCase))
                             {
-                                if (item["title"].ToString().Equals("Yom HaAtzma'ut", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    return true;
-                                }
-                                else if (item["subcat"].ToString().Equals("modern"))
-                                {
-                                    /* && item["subcat"].Equals("modern")*/
-                                    Console.WriteLine(item["title"]);
-                                    Console.WriteLine(item["subcat"]);
-
-                                    return false;
-                                }
                                 return true;
                             }
+                            else if (item["subcat"].ToString().Equals("modern"))
+                            {
+                                return false;
+                            }
+                            return true;
                         }
                     }
-                    return false;
                 }
-                else
-                {
-                    throw new Exception($"API Error: {response.StatusCode}");
-                }
+                return false;
+            }
+            else
+            {
+                throw new Exception($"API Error: {response.StatusCode}");
             }
         }
 
         public async Task AddAvailableAppointmentsToWorkers(DateTime date)
         {
-            List<Shift> shifts = await shiftManager.GetShiftsByDayAsync((int)date.DayOfWeek);
-            var workerTypes = configuration.GetSection("WorkerAppointmentDuration").GetChildren()
+            List<Shift> shifts = await _shiftManager.GetShiftsByDayAsync((int)date.DayOfWeek);
+            var workerTypes = _configuration.GetSection("WorkerAppointmentDuration").GetChildren()
                                  .Select(x => x.Key)
                                  .ToList();
-            if (!IsHoliday(date))
+            if (!await IsHoliday(date)) 
             {
                 foreach (Shift shift in shifts)
                 {
-                    List<Worker> workers = await shiftWorkerManager.GetWorkersByShiftID(shift.Id);
+                    List<Worker> workers = await _shiftWorkerManager.GetWorkersByShiftID(shift.Id);
                     foreach (Worker worker in workers)
                     {
                         if (!workerTypes.Contains(worker.WorkerType))
@@ -122,7 +100,7 @@ namespace WEB_API.BL.Services
                             throw new Exception("Invalid worker");
                         }
 
-                        var appointmentDurations = configuration[$"WorkerAppointmentDuration:{worker.WorkerType}"];
+                        var appointmentDurations = _configuration[$"WorkerAppointmentDuration:{worker.WorkerType}"];
                         if (int.TryParse(appointmentDurations, out int appointmentDuration))
                         {
                             for (TimeOnly time = shift.StartTime; time <= shift.EndTime; time = time.AddMinutes(appointmentDuration))
@@ -135,9 +113,9 @@ namespace WEB_API.BL.Services
                                     EndTime = time.AddMinutes(appointmentDuration)
                                 };
 
-                                var appointmentEntity = mapper.Map<AvailableAppointment>(appointment);
+                                var appointmentEntity = _mapper.Map<AvailableAppointment>(appointment);
 
-                                await dal.AddAvailableAppointmentAsync(appointmentEntity);
+                                await _dal.AddAvailableAppointmentAsync(appointmentEntity);
                             }
                         }
                     }
@@ -146,6 +124,3 @@ namespace WEB_API.BL.Services
         }
     }
 }
-
-
-
