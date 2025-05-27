@@ -7,13 +7,11 @@ using WEB_API.Models;
 
 namespace BL.Models
 {
-    public class AppointmentBL
+    public class AvailableAppointmentBL
     {
         public int Id { get; set; }
 
         public int WorkerId { get; set; }
-
-        public int BabyId { get; set; }
 
         public DateOnly AppointmentDate { get; set; }
 
@@ -21,8 +19,6 @@ namespace BL.Models
 
         public TimeOnly EndTime { get; set; }
 
-        //public virtual Baby Baby { get; set; } = null!;
-
-        //public virtual Worker Worker { get; set; } = null!;
     }
 }
+

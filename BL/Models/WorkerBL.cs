@@ -22,7 +22,6 @@ namespace BL.Models
 
         public string WorkerType { get; set; } = null!;
 
-
         public DateOnly StartDate { get; set; }
 
         public int? Experience { get; set; }

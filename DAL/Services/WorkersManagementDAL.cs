@@ -5,11 +5,11 @@ using WEB_API.Models;
 
 namespace WEB_API.DAL.Services
 {
-    public class WorkersManagmentDAL : IWorkersManagmentDAL
+    public class WorkersManagementDAL : IWorkersManagmentDAL
     {
         private readonly DbContext _context;
 
-        public WorkersManagmentDAL(DbContext context)
+        public WorkersManagementDAL(DbContext context)
         {
             _context = context;
         }

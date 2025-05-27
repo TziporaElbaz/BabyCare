@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using BL.Models;
 using WEB_API.DAL.Models;
 
 namespace WEB_API.BL.Services
 {
-    public class MappingProfile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            //CreateMap<SourceModel, DestinationModel>();
-     
+            CreateMap<AvailableAppointmentBL, AvailableAppointment>().ReverseMap();
         }
     }
 }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Configuration;
 using WEB_API.DAL.Models;
+using BL.Models;
+using AutoMapper;
+using DAL.API;
 
 namespace WEB_API.BL.Services
 {
@@ -15,13 +18,17 @@ namespace WEB_API.BL.Services
         private static readonly string _baseUrl = "https://www.hebcal.com/hebcal";
         private readonly IWorkerShiftManagementDAL shiftWorkerManager;
         private readonly IShiftManagementDAL shiftManager;
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
+        private readonly IMapper mapper;
+        private readonly IAvailableAppointmentManagementDAL dal;
 
-        public AvailableAppointmentsManagementBL(IWorkerShiftManagementDAL _shiftWorkerManagement, IShiftManagementDAL _shiftManager, IConfiguration configuration)
+        public AvailableAppointmentsManagementBL(IWorkerShiftManagementDAL _shiftWorkerManagement, IShiftManagementDAL _shiftManager, IConfiguration _configuration, IMapper _mapper, IAvailableAppointmentManagementDAL _dal)
         {
             shiftWorkerManager = _shiftWorkerManagement;
             shiftManager = _shiftManager;
-            _configuration = configuration;
+            configuration = _configuration;
+            mapper = _mapper;
+            dal = _dal;
         }
         //public void GenerateAvailableAppointments(DateTime startDate, DateTime endDate)
         //{
@@ -97,50 +104,48 @@ namespace WEB_API.BL.Services
             }
         }
 
-        public void AddAvailableAppointmentsToWorkers(DateTime date)
+        public async Task AddAvailableAppointmentsToWorkers(DateTime date)
         {
-            List<Shift> shifts = shiftManager.GetShiftsByDayAsync((int)date.DayOfWeek).Result;
-            var workerTypes = _configuration.GetSection("WorkerAppointmentDuration").GetChildren()
+            List<Shift> shifts = await shiftManager.GetShiftsByDayAsync((int)date.DayOfWeek);
+            var workerTypes = configuration.GetSection("WorkerAppointmentDuration").GetChildren()
                                  .Select(x => x.Key)
                                  .ToList();
             if (!IsHoliday(date))
             {
                 foreach (Shift shift in shifts)
                 {
-                    List<Worker> workers = shiftWorkerManager.GetWorkersByShiftID(shift.Id).Result;
+                    List<Worker> workers = await shiftWorkerManager.GetWorkersByShiftID(shift.Id);
                     foreach (Worker worker in workers)
                     {
                         if (!workerTypes.Contains(worker.WorkerType))
                         {
                             throw new Exception("Invalid worker");
                         }
-                        //int appointmentDuration1 = _configuration.GetSection("WorkerAppointmentDuration")
-                        //                         .GetValue<int>(worker.WorkerType);
 
-                        var appointmentDurations = _configuration[$"WorkerAppointmentDuration:{worker.WorkerType}"];
+                        var appointmentDurations = configuration[$"WorkerAppointmentDuration:{worker.WorkerType}"];
                         if (int.TryParse(appointmentDurations, out int appointmentDuration))
                         {
-
                             for (TimeOnly time = shift.StartTime; time <= shift.EndTime; time = time.AddMinutes(appointmentDuration))
-                        {
-                            //worker.AvailableAppointments.Add(new AvailableAppointment
-                            //{
-                            //    WorkerId = worker.Id,
-                            //    AppointmentDate = DateOnly.FromDateTime(DateTime.Now),
-                            //    StartTime = time,
-                            //    EndTime = time.AddMinutes(appointmentDuration)
-                            //});
+                            {
+                                AvailableAppointmentBL appointment = new AvailableAppointmentBL
+                                {
+                                    WorkerId = worker.Id,
+                                    AppointmentDate = DateOnly.FromDateTime(date),
+                                    StartTime = time,
+                                    EndTime = time.AddMinutes(appointmentDuration)
+                                };
 
-                            //var appointmentService = new AppointmentService(new YourDbContext());
-                            //appointmentService.SaveAvailableAppointments(availableAppointments);
+                                var appointmentEntity = mapper.Map<AvailableAppointment>(appointment);
+
+                                await dal.AddAvailableAppointmentAsync(appointmentEntity);
+                            }
                         }
                     }
                 }
             }
         }
-
     }
 }
-}
+
 
 

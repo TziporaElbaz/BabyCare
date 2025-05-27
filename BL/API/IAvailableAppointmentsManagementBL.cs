@@ -2,7 +2,7 @@
 {
     public interface IAvailableAppointmentsManagementBL
     {
-        void AddAvailableAppointmentsToWorkers(DateTime day);
+        Task AddAvailableAppointmentsToWorkers(DateTime day);
         bool IsHoliday(DateTime date);
     }
 }

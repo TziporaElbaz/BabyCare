@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WEB_API.DAL.API;
 
 using WEB_API.Models;
@@ -8,6 +9,7 @@ namespace WEB_API.DAL.Services
     public class AppointmentManagementDAL : IAppointmentManagementDAL
     {
         private readonly DbContext _context;
+        //private readonly IMapper _mapper;
 
         public AppointmentManagementDAL(DbContext context)
         {
@@ -31,8 +33,6 @@ namespace WEB_API.DAL.Services
                 await _context.SaveChangesAsync();
             }
         }
-
-
 
         // Get an appointment by ID
         public async Task<Appointment?> GetAppointmentByIdAsync(int id)
