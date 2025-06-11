@@ -177,6 +177,7 @@ H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\refint\WEB_API.dll
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.pdb
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.genruntimeconfig.cache
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\ref\WEB_API.dll
+<<<<<<< HEAD
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.MvcApplicationPartsAssemblyInfo.cs
 H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Microsoft.OpenApi.dll
 H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -184,3 +185,15 @@ H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.d
 H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Data\Database.mdf
 H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Data\Database_log.ldf
+=======
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.csproj.AssemblyReference.cache
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.GeneratedMSBuildEditorConfig.editorconfig
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.AssemblyInfoInputs.cache
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.AssemblyInfo.cs
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.csproj.CoreCompileInputs.cache
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.MvcApplicationPartsAssemblyInfo.cache
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.sourcelink.json
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.dll
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\refint\WEB_API.dll
+H:\פרויקטטטט סופי\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.pdb
+>>>>>>> b81fa5d445998c3abc4743b4e8525e798391ad35

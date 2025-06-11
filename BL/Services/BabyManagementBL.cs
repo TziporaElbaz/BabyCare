@@ -1,52 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
-using BabyCare.DAL.API;
-using BabyCare.DAL.Services;
-using BabyCare.DAL.Models;
-using BabyCare.BL.API;
+using WEB_API.DAL.API;
+using WEB_API.DAL.Services;
+using WEB_API.DAL.Models;
+using WEB_API.BL.API;
+using Newtonsoft.Json.Linq;
+using AutoMapper;
+using Microsoft.Extensions.Configuration;
 
-namespace BabyCare.BL.Services
+
+namespace WEB_API.BL.Services
 {
 
     public class BabyManagementBL : IBabyManagementBL
     {
-        private readonly IBabyManagementDAL _dal;
+        private readonly IBabyManagementDAL babyManagementDAL;
+        private readonly IConfiguration configuration;
+        private readonly IMapper mapper;
 
-        public BabyManagementBL(IBabyManagementDAL dal)
+        public BabyManagementBL(IBabyManagementDAL dal,IMapper _mapper,IConfiguration _configuration)
         {
-            _dal = dal;
+            this.configuration = _configuration;
+            mapper = _mapper;
+            babyManagementDAL = dal;
         }
 
         public async Task<Baby?> GetBabyById(string id)
         {
-            return await _dal.GetBabyByIdAsync(id);
+            return await babyManagementDAL.GetBabyByIdAsync(id);
         }
 
         public async Task AddBaby(Baby baby)
         {
-            await _dal.AddBabyAsync(baby);
+            await babyManagementDAL.AddBabyAsync(baby);
         }
 
         public async Task DeleteBaby(string id)
         {
-            var baby = await _dal.GetBabyByIdAsync(id);
+            var baby = await babyManagementDAL.GetBabyByIdAsync(id);
             if (baby == null)
                 throw new KeyNotFoundException("Baby not found");
 
-            await _dal.DeleteBabyAsync(baby);
+            await babyManagementDAL.DeleteBabyAsync(baby);
         }
 
         public async Task<List<Baby>> GetAllBabies()
         {
-            return await _dal.GetAllBabiesAsync();
+            return await babyManagementDAL.GetAllBabiesAsync();
         }
 
         public async Task UpdateBabyDetails(Baby updatedBaby)
         {
-                Baby baby = await _dal.GetBabyByIdAsync(updatedBaby.BabyId);
+                Baby baby = await babyManagementDAL.GetBabyByIdAsync(updatedBaby.BabyId);
                 if (baby == null)
                     throw new KeyNotFoundException("Baby not found");
 
@@ -64,8 +73,45 @@ namespace BabyCare.BL.Services
                 baby.ParentEmail = updatedBaby.ParentEmail ?? baby.ParentEmail;
                 baby.Address = updatedBaby.Address ?? baby.Address;
 
-                await _dal.UpdateBabyDetailsAsync(baby);
-            }       
+                await babyManagementDAL.UpdateBabyDetailsAsync(baby);
+            }
+        public async Task<double> GetHeightPercentile(bool gender, int ageMonths, double height)
+        {
+            string genderString = gender ? "male" : "female";
+            string url = $"https://growthcalculator.org/api/height_for_age_percentile?sex={genderString}&age={ageMonths}&age_unit=months&height={height}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+                var jObject = JObject.Parse(json);
+                double percentile = (double)jObject["percentile"];
+                return percentile;
+            }
+        }
+        public async Task<double> GetWeightPercentile(bool gender, int ageMonths, double weight)
+        {
+            string genderString = gender ? "male" : "female";
+            string url = $"https://growthcalculator.org/api/weight_for_age_percentile?sex={genderString}&age={ageMonths}&age_unit=months&weight={weight}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                var json = await response.Content.ReadAsStringAsync();
+                var jObject = JObject.Parse(json);
+                double percentile = (double)jObject["percentile"];
+                return percentile;
+            }
+        }
+        public int BabysCurrentAge(string BabyId)
+        {
+            Baby baby = babyManagementDAL.GetBabyByIdAsync(BabyId).Result;
+            return System.DateTime.Now.Month >= baby.Birthdate.Month ?
+            ((System.DateTime.Now.Year - baby.Birthdate.Year) * 12 + System.DateTime.Now.Month - baby.Birthdate.Month) :
+            ((System.DateTime.Now.Year - baby.Birthdate.Year) * 12 + 12 - baby.Birthdate.Month + System.DateTime.Now.Month);
+        }
     }
 }
+
+
 

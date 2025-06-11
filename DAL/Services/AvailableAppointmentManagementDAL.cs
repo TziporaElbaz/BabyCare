@@ -1,12 +1,12 @@
-﻿using BabyCare.DAL.Models;
+﻿using WEB_API.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BabyCare.DAL.API;
+using WEB_API.DAL.API;
 
-namespace BabyCare.DAL.Services
+namespace WEB_API.DAL.Services
 {
     public class AvailableAppointmentManagementDAL : IAvailableAppointmentManagementDAL
     {

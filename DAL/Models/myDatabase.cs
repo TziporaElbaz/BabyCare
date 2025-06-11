@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 //using WEB_API.DAL.Models;
 //using System.Data.Entity;
 
-namespace BabyCare.DAL.Models;
+namespace WEB_API.DAL.Models;
 
 public partial class myDatabase : DbContext
 {

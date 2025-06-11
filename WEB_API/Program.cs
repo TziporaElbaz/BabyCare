@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 //using System.Data.Entity;
-using BabyCare.BL.API;
-using BabyCare.DAL.Services;
-using BabyCare.BL.Services;
-using BabyCare.DAL.API;
-using BabyCare.DAL.Models;
+using WEB_API.BL.API;
+using WEB_API.DAL.Services;
+using WEB_API.BL.Services;
+using WEB_API.DAL.API;
+using WEB_API.DAL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

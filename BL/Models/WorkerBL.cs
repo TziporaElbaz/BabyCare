@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BBabyCare.BL.Models
+namespace  WEB_API.BL.Models
 {
     public class WorkerBL
     {

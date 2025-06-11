@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using BabyCare.BL.Models;
-using BabyCare.DAL.Models;
+using BL.Models;
+using WEB_API.DAL.Models;
+using WEB_API.Models;
 
-namespace BabyCare.BL.Services
+namespace WEB_API.BL.Services
 {
     public class MappingProfile : Profile
     {

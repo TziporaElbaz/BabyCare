@@ -3,13 +3,13 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Configuration;
-using BabyCare.BL.API;
-using BabyCare.DAL.API;
-using BabyCare.DAL.Models;
-using BabyCare.BL.Models;
+using WEB_API.BL.API;
+using WEB_API.DAL.API;
+using WEB_API.DAL.Models;
+using WEB_API.BL.Models;
 using AutoMapper;
 
-namespace BabyCare.BL.Services
+namespace WEB_API.BL.Services
 {
     public class AvailableAppointmentsManagementBL : IAvailableAppointmentsManagementBL
     {

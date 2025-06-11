@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BabyCare.DAL.API;
-using BabyCare.DAL.Models;
+using WEB_API.DAL.API;
+using WEB_API.DAL.Models;
 
-namespace BabyCare.DAL.Services
+namespace WEB_API.DAL.Services
 {
     public class ShiftManagementDAL : IShiftManagementDAL
     {

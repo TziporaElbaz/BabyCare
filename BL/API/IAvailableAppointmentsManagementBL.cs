@@ -1,4 +1,4 @@
-﻿namespace BabyCare.BL.API
+﻿namespace WEB_API.BL.API
 {
     public interface IAvailableAppointmentsManagementBL
     {

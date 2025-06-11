@@ -1,4 +1,4 @@
-﻿namespace BabyCare.DAL.Models;
+﻿namespace WEB_API.DAL.Models;
 public partial class Worker
 {
     public int Id { get; set; }

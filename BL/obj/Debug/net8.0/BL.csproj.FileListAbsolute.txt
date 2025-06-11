@@ -16,5 +16,17 @@ H:\C#\Proj\BabyCare\BL\obj\Debug\net8.0\refint\BL.dll
 H:\C#\Proj\BabyCare\BL\obj\Debug\net8.0\BL.pdb
 H:\C#\Proj\BabyCare\BL\obj\Debug\net8.0\BL.genruntimeconfig.cache
 H:\C#\Proj\BabyCare\BL\obj\Debug\net8.0\ref\BL.dll
+<<<<<<< HEAD
 H:\C#\Proj\BabyCare\BL\bin\Debug\net8.0\Data\Database.mdf
 H:\C#\Proj\BabyCare\BL\bin\Debug\net8.0\Data\Database_log.ldf
+=======
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.csproj.AssemblyReference.cache
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.GeneratedMSBuildEditorConfig.editorconfig
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.AssemblyInfoInputs.cache
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.AssemblyInfo.cs
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.csproj.CoreCompileInputs.cache
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.sourcelink.json
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.dll
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\refint\BL.dll
+H:\פרויקטטטט סופי\BabyCare\BL\obj\Debug\net8.0\BL.pdb
+>>>>>>> b81fa5d445998c3abc4743b4e8525e798391ad35

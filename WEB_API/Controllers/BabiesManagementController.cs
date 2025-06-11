@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using BabyCare.BL.Models;
 using BabyCare.BL.API;
 using AutoMapper;
@@ -76,7 +77,7 @@ namespace BabyCare.WEB_API.Controllers
                 return NoContent();
             }
             catch (KeyNotFoundException)
-            {
+    {
                 return NotFound("Baby not found");
             }
         }

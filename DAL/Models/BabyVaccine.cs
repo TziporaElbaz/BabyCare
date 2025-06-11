@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BabyCare.DAL.Models;
+namespace WEB_API.DAL.Models;
 public partial class BabyVaccine
 {
+    public BabyVaccine(Baby baby, Vaccine vaccine)
+    {
+        BabyId = baby.Id;
+        Baby = baby;
+        Vaccine = vaccine;
+        VaccineId = vaccine.Id;
+        DateGiven = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+    }
     public int Id { get; set; }
 
     public int BabyId { get; set; }
