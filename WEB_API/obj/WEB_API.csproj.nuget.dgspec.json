@@ -225,9 +225,6 @@
             "projectReferences": {
               "H:\\BabyCare\\BL\\BL.csproj": {
                 "projectPath": "H:\\BabyCare\\BL\\BL.csproj"
-              },
-              "H:\\BabyCare\\DAL\\DAL.csproj": {
-                "projectPath": "H:\\BabyCare\\DAL\\DAL.csproj"
               }
             }
           }

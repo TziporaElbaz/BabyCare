@@ -5364,7 +5364,6 @@
     "net8.0": [
       "AutoMapper >= 14.0.0",
       "BL >= 1.0.0",
-      "DAL >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.5",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.5",
@@ -5408,9 +5407,6 @@
           "projectReferences": {
             "H:\\BabyCare\\BL\\BL.csproj": {
               "projectPath": "H:\\BabyCare\\BL\\BL.csproj"
-            },
-            "H:\\BabyCare\\DAL\\DAL.csproj": {
-              "projectPath": "H:\\BabyCare\\DAL\\DAL.csproj"
             }
           }
         }
