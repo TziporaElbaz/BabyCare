@@ -6,6 +6,7 @@ using WEB_API.DAL.Services;
 using WEB_API.BL.Services;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -19,7 +20,18 @@ builder.Services.AddDbContext<myDatabase>(options =>
 builder.Services.AddScoped<IBabyManagementDAL, BabyManagementDAL>();
 builder.Services.AddScoped<IBabyManagementBL, BabyManagementBL>();
 
+
+builder.Services.AddScoped<IWorkersManagmentDAL, WorkersManagementDAL>();
+builder.Services.AddScoped<IWorkerManegmentBL, WorkerManegmentBL>();
+
+builder.Services.AddScoped<IMapper, Mapper>(); // או הוספת AutoMapper כפי שצריך
+
+builder.Services.AddControllers();
+
 var app = builder.Build();
+
+// הגדרות נוספות של האפליקציה...
+
 
 if (app.Environment.IsDevelopment())
 {

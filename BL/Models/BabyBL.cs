@@ -10,10 +10,8 @@ namespace WEB_API.BL.Models
 {
     public class BabyBL
     {
-        IBabyManagementBL babyManagementBL;
-        public BabyBL(IBabyManagementBL _babyManagementBL) {
-            babyManagementBL = _babyManagementBL;
-        } 
+      
+
         public int Id { get; set; }
 
         public string BabyId { get; set; } = null!;
@@ -37,21 +35,7 @@ namespace WEB_API.BL.Models
         public bool Gender { get; set; }
 
 
-        public double WeightPercentile
-        {
-            get
-            {
-                return  babyManagementBL.GetWeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Weight).Result;
-            }
-        }
-
-        public double HeightPercentile
-        {
-            get
-            {
-                return  babyManagementBL.GetHeightPercentile(Gender, babyManagementBL.BabysCurrentAge(BabyId), Height).Result;
-            }
-        }
+      
 
 
     }

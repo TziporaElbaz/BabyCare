@@ -12,9 +12,9 @@ namespace WEB_API.DAL.Services
 {
     public class BabyVaccineManagementDAL : IBabyVaccineManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public BabyVaccineManagementDAL(DbContext context)
+        public BabyVaccineManagementDAL(myDatabase context)
         {
             _context = context;
         }

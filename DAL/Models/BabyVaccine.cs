@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace WEB_API.DAL.Models;
 public partial class BabyVaccine
 {
+    public BabyVaccine() { }
     public BabyVaccine(Baby baby, Vaccine vaccine)
     {
         BabyId = baby.Id;

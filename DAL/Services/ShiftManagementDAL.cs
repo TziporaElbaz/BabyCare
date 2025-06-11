@@ -6,9 +6,9 @@ namespace WEB_API.DAL.Services
 {
     public class ShiftManagementDAL : IShiftManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public ShiftManagementDAL(DbContext context)
+        public ShiftManagementDAL(myDatabase context)
         {
             _context = context;
         }

@@ -10,9 +10,9 @@ namespace WEB_API.DAL.Services
 {
     public class AvailableAppointmentManagementDAL : IAvailableAppointmentManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public AvailableAppointmentManagementDAL(DbContext context)
+        public AvailableAppointmentManagementDAL(myDatabase context)
         {
             _context = context;
         }

@@ -5,13 +5,13 @@ using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.Services
 {
-    public class WorkerShiftManagementDAL : IWorkerShiftManagementDAL
+    public class WorkerShiftManagementDAL : IWorkerShiftManagementDAL, IWorkerShiftManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
         private readonly IWorkersManagmentDAL _workersManagmentDAL;
 
         // Constructor שמקבל DbContext
-        public WorkerShiftManagementDAL(DbContext context, IWorkersManagmentDAL workersManagmentDAL)
+        public WorkerShiftManagementDAL(myDatabase context, IWorkersManagmentDAL workersManagmentDAL)
         {
             _context = context;
             _workersManagmentDAL = workersManagmentDAL;
@@ -39,7 +39,7 @@ namespace WEB_API.DAL.Services
         }
 
         // מחיקת קשר בין עובד למשמרת לפי ID
-        public async Task DeleteWorkerShiftAsync(int id)
+        public async Task DeleteWorkerShiftAsync(string id)
         {
             var workerShift = await _context.Set<WorkerShift>().FindAsync(id);
             if (workerShift == null)
@@ -68,10 +68,10 @@ namespace WEB_API.DAL.Services
                         .Select(ws => ws.Worker) // Select only the Worker entities
                         .ToListAsync();
         }
-        public async Task<List<Shift>> GetShiftsByWorkerID(int workerId)
+        public async Task<List<Shift>> GetShiftsByWorkerID(string workerId)
         {
             return await _context.Set<WorkerShift>()
-                        .Where(ws => ws.WorkerId == workerId)
+                        .Where(ws => ws.WorkerId.Equals(workerId))
                         .Include(ws => ws.Shift)
                         .Select(ws => ws.Shift) // Select only the Worker entities
                         .ToListAsync();
@@ -100,19 +100,8 @@ namespace WEB_API.DAL.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<WorkerShift?> GetWorkerShiftByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<List<WorkerShift>> GetWorkerShiftsByShiftIdAsync(int day)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<List<Shift>> GetShiftByWorkerID(int workerId)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

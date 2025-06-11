@@ -5,6 +5,7 @@ namespace WEB_API.DAL.Models
 {
     public partial class Baby
     {
+
         public int Id { get; set; }
 
         public string BabyId { get; set; } = null!;

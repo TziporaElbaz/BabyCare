@@ -16,6 +16,7 @@ namespace WEB_API.BL.Services
         {
             CreateMap<AvailableAppointmentBL, AvailableAppointment>().ReverseMap();
             CreateMap<BabyBL, Baby>().ReverseMap();
+            CreateMap<WorkerBL, Worker>().ReverseMap();
         }
     }
 }

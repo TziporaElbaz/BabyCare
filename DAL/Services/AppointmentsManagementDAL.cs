@@ -7,10 +7,10 @@ namespace WEB_API.DAL.Services
 {
     public class AppointmentManagementDAL : IAppointmentManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
         //private readonly IMapper _mapper;
 
-        public AppointmentManagementDAL(DbContext context)
+        public AppointmentManagementDAL(myDatabase context)
         {
             _context = context;
         }

@@ -1,17 +1,14 @@
-﻿
-using WEB_API.DAL.Models;
+﻿using WEB_API.DAL.Models;
 
-namespace WEB_API.DAL.API
+namespace WEB_API.DAL.Services
 {
     public interface IWorkerShiftManagementDAL
     {
         Task AddWorkerShiftAsync(Worker worker, Shift shift);
-        Task DeleteWorkerShiftAsync(int id);
+        Task DeleteWorkerShiftAsync(string id);
         Task<List<WorkerShift>> GetAllWorkerShiftsAsync();
-        Task<WorkerShift?> GetWorkerShiftByIdAsync(int id);
-        Task<List<WorkerShift>> GetWorkerShiftsByShiftIdAsync(int day);
+        Task<List<Shift>> GetShiftsByWorkerID(string workerId);
         Task<List<Worker>> GetWorkersByShiftID(int shiftId);
-        Task<List<Shift>>GetShiftByWorkerID(int workerId);
         Task UpdateWorkerShiftDetailsAsync(WorkerShift updatedWorkerShift);
     }
 }

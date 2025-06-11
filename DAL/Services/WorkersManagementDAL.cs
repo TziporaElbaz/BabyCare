@@ -7,9 +7,9 @@ namespace WEB_API.DAL.Services
 {
     public class WorkersManagementDAL : IWorkersManagmentDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public WorkersManagementDAL(DbContext context)
+        public WorkersManagementDAL(myDatabase context)
         {
             _context = context;
         }
@@ -20,9 +20,9 @@ namespace WEB_API.DAL.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteWorkerAsync(int id, string name)
+        public async Task DeleteWorkerAsync(string id, string name)
         {
-            var worker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.Id == id && w.Name == name);
+            var worker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.Id.Equals(id )&& w.Name == name);
             if (worker != null)
             {
                 _context.Set<Worker>().Remove(worker);

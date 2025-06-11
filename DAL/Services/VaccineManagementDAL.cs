@@ -6,9 +6,9 @@ namespace WEB_API.DAL.Services
 {
     public class VaccineManagementDAL : IVaccineManagementDAL
     {
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public VaccineManagementDAL(DbContext context)
+        public VaccineManagementDAL(myDatabase context)
         {
             _context = context;
         }

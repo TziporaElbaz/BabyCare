@@ -12,9 +12,9 @@ namespace DAL.Services
     internal class AvailableAppointmentDAL : IAvailableAppointmentDAL
     {
 
-        private readonly DbContext _context;
+        private readonly myDatabase _context;
 
-        public AvailableAppointmentDAL(DbContext context)
+        public AvailableAppointmentDAL(myDatabase context)
         {
             _context = context;
         }
