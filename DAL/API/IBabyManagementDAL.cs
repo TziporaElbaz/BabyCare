@@ -1,15 +1,14 @@
-﻿
-
-using WEB_API.Models;
+﻿using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.API
+
+{
+    public interface IBabyManagementDAL
     {
-        public interface IBabyManagementDAL
-        {
-            Task AddBabyAsync(Baby baby);
-            Task DeleteBabyAsync(int id);
-            Task<Baby?> GetBabyByIdAsync(int id);
-            Task<List<Baby>> GetAllBabiesAsync();
-            Task UpdateBabyDetailsAsync(Baby updatedBaby);
-        }
+        Task<Baby?> GetBabyByIdAsync(string id);
+        Task AddBabyAsync(Baby baby);
+        Task DeleteBabyAsync(Baby baby);
+        Task<List<Baby>> GetAllBabiesAsync();
+        Task UpdateBabyDetailsAsync(Baby updatedBaby);
     }
+}

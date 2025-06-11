@@ -145,6 +145,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[14.0.0, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.5.1, )"
@@ -225,6 +229,9 @@
             "projectReferences": {
               "H:\\BabyCare\\BL\\BL.csproj": {
                 "projectPath": "H:\\BabyCare\\BL\\BL.csproj"
+              },
+              "H:\\BabyCare\\DAL\\DAL.csproj": {
+                "projectPath": "H:\\BabyCare\\DAL\\DAL.csproj"
               }
             }
           }
@@ -275,6 +282,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.1.2, )"
             }
           },
           "imports": [

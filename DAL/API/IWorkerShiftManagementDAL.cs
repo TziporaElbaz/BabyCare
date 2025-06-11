@@ -1,5 +1,5 @@
 ﻿
-using WEB_API.Models;
+using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.API
 {

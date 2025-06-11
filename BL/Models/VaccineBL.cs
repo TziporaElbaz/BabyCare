@@ -4,9 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Models
+namespace WEB_API.BL.Models
 {
     public class VaccineBL
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = null!;
+
+        public int MinAgeMonths { get; set; }
+
+        public int MaxAgeMonths { get; set; }
+
+        public bool IsMandatory { get; set; }
+
     }
 }

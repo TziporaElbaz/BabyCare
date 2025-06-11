@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Models
+namespace  WEB_API.BL.Models
 {
     public class WorkerBL
     {
@@ -21,7 +21,6 @@ namespace BL.Models
         public string? Email { get; set; }
 
         public string WorkerType { get; set; } = null!;
-
 
         public DateOnly StartDate { get; set; }
 

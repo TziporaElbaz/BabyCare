@@ -1,6 +1,7 @@
-﻿using WEB_API.Models;
+﻿using WEB_API.DAL.Models;
 
-namespace BL.API
+
+namespace WEB_API.BL.API
 {
     public interface IAppointmentsManagementBL
     {

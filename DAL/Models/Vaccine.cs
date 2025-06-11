@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WEB_API.Models;
-
+namespace   WEB_API.DAL.Models;
 public partial class Vaccine
 {
     public int Id { get; set; }
