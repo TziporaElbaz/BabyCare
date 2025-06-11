@@ -1804,7 +1804,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "AutoMapper": "14.0.0",
           "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "9.0.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.5",
@@ -5375,23 +5374,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\גולדברג דינה ברכה\\.nuget\\packages\\": {},
+    "C:\\Users\\אלבז צפורה\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\C#\\Proj\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "projectUniqueName": "H:\\BabyCare\\WEB_API\\WEB_API.csproj",
       "projectName": "WEB_API",
-      "projectPath": "H:\\C#\\Proj\\BabyCare\\WEB_API\\WEB_API.csproj",
-      "packagesPath": "C:\\Users\\גולדברג דינה ברכה\\.nuget\\packages\\",
-      "outputPath": "H:\\C#\\Proj\\BabyCare\\WEB_API\\obj\\",
+      "projectPath": "H:\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "packagesPath": "C:\\Users\\אלבז צפורה\\.nuget\\packages\\",
+      "outputPath": "H:\\BabyCare\\WEB_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\גולדברג דינה ברכה\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\אלבז צפורה\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5407,11 +5406,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj": {
-              "projectPath": "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj"
+            "H:\\BabyCare\\BL\\BL.csproj": {
+              "projectPath": "H:\\BabyCare\\BL\\BL.csproj"
             },
-            "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj": {
-              "projectPath": "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj"
+            "H:\\BabyCare\\DAL\\DAL.csproj": {
+              "projectPath": "H:\\BabyCare\\DAL\\DAL.csproj"
             }
           }
         }

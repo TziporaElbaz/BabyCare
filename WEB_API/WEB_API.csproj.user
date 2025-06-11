@@ -4,6 +4,8 @@
     <ActiveDebugProfile>https</ActiveDebugProfile>
     <AssemblyName>WEB_API</AssemblyName>
     <RootNamespace>WEB_API</RootNamespace>
+    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />

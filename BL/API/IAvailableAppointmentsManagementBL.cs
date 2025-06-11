@@ -1,8 +1,8 @@
-﻿namespace WEB_API.BL.API
+﻿namespace BL.API
 {
     public interface IAvailableAppointmentsManagementBL
     {
-        void AddAvailableAppointmentsToWorkers(DateTime day);
+        void AddAvailableAppointmentsToWorkers(DateTime date);
         bool IsHoliday(DateTime date);
     }
 }

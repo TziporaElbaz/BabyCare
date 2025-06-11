@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Configuration;
 using WEB_API.DAL.Models;
+using BL.API;
 
 namespace WEB_API.BL.Services
 {
@@ -122,25 +123,25 @@ namespace WEB_API.BL.Services
                         {
 
                             for (TimeOnly time = shift.StartTime; time <= shift.EndTime; time = time.AddMinutes(appointmentDuration))
-                        {
-                            //worker.AvailableAppointments.Add(new AvailableAppointment
-                            //{
-                            //    WorkerId = worker.Id,
-                            //    AppointmentDate = DateOnly.FromDateTime(DateTime.Now),
-                            //    StartTime = time,
-                            //    EndTime = time.AddMinutes(appointmentDuration)
-                            //});
+                            {
+                                //worker.AvailableAppointments.Add(new AvailableAppointment
+                                //{
+                                //    WorkerId = worker.Id,
+                                //    AppointmentDate = DateOnly.FromDateTime(DateTime.Now),
+                                //    StartTime = time,
+                                //    EndTime = time.AddMinutes(appointmentDuration)
+                                //});
 
-                            //var appointmentService = new AppointmentService(new YourDbContext());
-                            //appointmentService.SaveAvailableAppointments(availableAppointments);
+                                //var appointmentService = new AppointmentService(new YourDbContext());
+                                //appointmentService.SaveAvailableAppointments(availableAppointments);
+                            }
                         }
                     }
                 }
             }
-        }
 
+        }
     }
-}
 }
 
 

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BL.Models
+namespace BL.Services
 {
-    public class BabyBL
+    public class AppointmentsManagmentBL
     {
+
     }
 }
