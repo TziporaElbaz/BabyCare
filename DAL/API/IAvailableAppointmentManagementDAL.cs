@@ -7,7 +7,7 @@ namespace WEB_API.DAL.API
         Task DeleteAvailableAppointmentAsync(int id);
         Task<List<AvailableAppointment>> GetAllAvailableAppointmentsAsync();
         Task<AvailableAppointment?> GetAvailableAppointmentByIdAsync(int id);
-        Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time);
+        Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(string workerId, DateOnly date, TimeOnly time);
         Task<List<AvailableAppointment>> GetAvailableAppointmentsByDateAsync(DateOnly date);
         Task<bool> IsTimeSlotAvailableAsync(DateOnly date, TimeOnly startTime, TimeOnly endTime);
         Task UpdateAvailableAppointmentAsync(AvailableAppointment updatedAppointment);

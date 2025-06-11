@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using DAL.API;
 using Microsoft.EntityFrameworkCore;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.Services
 {
-    public class WorkerShiftManagementDAL : IWorkerShiftManagementDAL, IWorkerShiftManagementDAL
+    public class WorkerShiftManagementDAL : IWorkerShiftManagementDAL
     {
         private readonly myDatabase _context;
         private readonly IWorkersManagmentDAL _workersManagmentDAL;

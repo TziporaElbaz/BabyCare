@@ -22,7 +22,7 @@ namespace WEB_API.DAL.Services
 
         public async Task DeleteWorkerAsync(string id, string name)
         {
-            var worker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.Id.Equals(id )&& w.Name == name);
+            var worker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.WorkerId.Equals(id )&& w.Name == name);
             if (worker != null)
             {
                 _context.Set<Worker>().Remove(worker);
@@ -31,9 +31,9 @@ namespace WEB_API.DAL.Services
         }
 
 
-        public async Task<Worker?> GetWorkerByIdAsync(int id)
+        public async Task<Worker?> GetWorkerByIdAsync(string id)
         {
-            return await _context.Set<Worker>().FirstOrDefaultAsync(w => w.Id == id);
+            return await _context.Set<Worker>().FirstOrDefaultAsync(w => w.WorkerId.Equals(id));
         }
 
 
@@ -43,10 +43,10 @@ namespace WEB_API.DAL.Services
         }
         public async Task UpdateWorkerDetailsAsync(Worker updatedWorker)
         {
-            var existingWorker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.Id == updatedWorker.Id);
+            var existingWorker = await _context.Set<Worker>().FirstOrDefaultAsync(w => w.WorkerId.Equals(updatedWorker.WorkerId));
             if (existingWorker == null)
             {
-                throw new KeyNotFoundException($"Worker with ID {updatedWorker.Id} not found.");
+                throw new KeyNotFoundException($"Worker with ID {updatedWorker.WorkerId} not found.");
             }
             existingWorker.Name = updatedWorker.Name ?? existingWorker.Name;
             existingWorker.Address = updatedWorker.Address ?? existingWorker.Address;
@@ -55,6 +55,8 @@ namespace WEB_API.DAL.Services
             existingWorker.WorkerType = updatedWorker.WorkerType ?? existingWorker.WorkerType;
             existingWorker.Salary = updatedWorker.Salary != default ? updatedWorker.Salary : existingWorker.Salary;
             existingWorker.Experience = updatedWorker.Experience ?? existingWorker.Experience;
+            _context.Set<Worker>().Update(existingWorker);
+           
             await _context.SaveChangesAsync();
         }
     }

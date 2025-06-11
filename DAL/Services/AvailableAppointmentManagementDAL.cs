@@ -65,10 +65,10 @@ namespace WEB_API.DAL.Services
         }
 
         // Get an available appointment by worker ID, date, and time
-        public async Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time)
+        public async Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(string workerId, DateOnly date, TimeOnly time)
         {
             return await _context.Set<AvailableAppointment>()
-                .FirstOrDefaultAsync(a => a.WorkerId == workerId && a.AppointmentDate == date && a.StartTime == time);
+                .FirstOrDefaultAsync(a => a.WorkerId.Equals( workerId) && a.AppointmentDate == date && a.StartTime == time);
         }
 
         // Get all available appointments for a specific date

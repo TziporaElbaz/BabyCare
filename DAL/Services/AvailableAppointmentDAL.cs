@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DAL.API;
 using WEB_API.DAL.Models;
 
-namespace DAL.Services
+namespace WEB_API.DAL.Services
 {
     internal class AvailableAppointmentDAL : IAvailableAppointmentDAL
     {

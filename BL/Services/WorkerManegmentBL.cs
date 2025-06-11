@@ -27,12 +27,12 @@ namespace WEB_API.BL.Services
             await _workersManagmentDAL.AddWorkerAsync(worker);
         }
 
-        public async Task DeleteWorkerAsync(int id, string name)
+        public async Task DeleteWorkerAsync(string id, string name)
         {
             await _workersManagmentDAL.DeleteWorkerAsync(id, name);
         }
 
-        public async Task<Worker?> GetWorkerByIdAsync(int id)
+        public async Task<Worker?> GetWorkerByIdAsync(string id)
         {
             return await _workersManagmentDAL.GetWorkerByIdAsync(id);
         }
