@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using WEB_API.DAL.Models;
-
-namespace WEB_API.Models;
-
+﻿namespace BabyCare.DAL.Models;
 public partial class Worker
 {
     public int Id { get; set; }

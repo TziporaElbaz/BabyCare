@@ -177,3 +177,10 @@ H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\refint\WEB_API.dll
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.pdb
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.genruntimeconfig.cache
 H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\ref\WEB_API.dll
+H:\C#\Proj\BabyCare\WEB_API\obj\Debug\net8.0\WEB_API.MvcApplicationPartsAssemblyInfo.cs
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Data\Database.mdf
+H:\C#\Proj\BabyCare\WEB_API\bin\Debug\net8.0\Data\Database_log.ldf

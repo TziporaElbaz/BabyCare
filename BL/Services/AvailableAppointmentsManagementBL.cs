@@ -1,17 +1,15 @@
-﻿using WEB_API.BL.API;
-using WEB_API.DAL.API;
-using WEB_API.Models;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Configuration;
-using WEB_API.DAL.Models;
-using BL.Models;
+using BabyCare.BL.API;
+using BabyCare.DAL.API;
+using BabyCare.DAL.Models;
+using BabyCare.BL.Models;
 using AutoMapper;
-using DAL.API;
 
-namespace WEB_API.BL.Services
+namespace BabyCare.BL.Services
 {
     public class AvailableAppointmentsManagementBL : IAvailableAppointmentsManagementBL
     {

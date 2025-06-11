@@ -1,6 +1,5 @@
-﻿using WEB_API.DAL.Models;
-
-namespace DAL.API
+﻿using BabyCare.DAL.Models;
+namespace BabyCare.DAL.API
 {
     public interface IAvailableAppointmentManagementDAL
     {

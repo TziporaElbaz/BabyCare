@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WEB_API.DAL.API;
-using WEB_API.Models;
+using BabyCare.DAL.API;
+using BabyCare.DAL.Models;
 
-namespace WEB_API.DAL.Services
+namespace BabyCare.DAL.Services
 {
     public class VaccineManagementDAL : IVaccineManagementDAL
     {

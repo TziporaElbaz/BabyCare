@@ -229,9 +229,6 @@
             "projectReferences": {
               "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj": {
                 "projectPath": "H:\\C#\\Proj\\BabyCare\\BL\\BL.csproj"
-              },
-              "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj": {
-                "projectPath": "H:\\C#\\Proj\\BabyCare\\DAL\\DAL.csproj"
               }
             }
           }
@@ -282,6 +279,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[8.1.2, )"
             }
           },
           "imports": [

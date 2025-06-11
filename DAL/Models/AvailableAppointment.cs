@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using WEB_API.Models;
 
-namespace WEB_API.DAL.Models;
-
+namespace BabyCare.DAL.Models;
 public partial class AvailableAppointment
 {
     public int Id { get; set; }

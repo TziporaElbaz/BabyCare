@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+//using WEB_API.DAL.Models;
 //using System.Data.Entity;
-using WEB_API.DAL.Models;
 
-namespace WEB_API.Models;
+namespace BabyCare.DAL.Models;
 
 public partial class myDatabase : DbContext
 {

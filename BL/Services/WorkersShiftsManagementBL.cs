@@ -1,11 +1,10 @@
-﻿using WEB_API.BL.API;
-using WEB_API.DAL.API;
-using WEB_API.Models;
+﻿using BabyCare.BL.API;
+using BabyCare.DAL.API;
+using BabyCare.DAL.Models;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using WEB_API.DAL.Models;
 
-namespace WEB_API.BL.Services
+namespace BabyCare.BL.Services
 {
     public class WorkersShiftsManagementBL : IWorkersShiftManagementBL
     {

@@ -1,7 +1,7 @@
 ﻿
-using WEB_API.Models;
+using BabyCare.DAL.Models;
 
-namespace WEB_API.DAL.API
+namespace BabyCare.DAL.API
 {
     public interface IVaccineManagementDAL
     {

@@ -1,8 +1,6 @@
-﻿
+﻿using BabyCare.DAL.Models;
 
-using WEB_API.Models;
-
-namespace WEB_API.DAL.API
+namespace BabyCare.DAL.API
 {
     public interface IWorkersManagmentDAL
     {

@@ -1,15 +1,14 @@
-﻿using DAL.API;
+﻿using BabyCare.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WEB_API.DAL.API;
-using WEB_API.DAL.Models;
+using BabyCare.DAL.API;
 
-namespace WEB_API.DAL.Services
+namespace BabyCare.DAL.Services
 {
-    public class AvailableAppointmentManagementDAL :  IAvailableAppointmentManagementDAL
+    public class AvailableAppointmentManagementDAL : IAvailableAppointmentManagementDAL
     {
         private readonly DbContext _context;
 
@@ -88,5 +87,6 @@ namespace WEB_API.DAL.Services
                 ((startTime >= a.StartTime && startTime < a.EndTime) ||
                  (endTime > a.StartTime && endTime <= a.EndTime)));
         }
+
     }
 }

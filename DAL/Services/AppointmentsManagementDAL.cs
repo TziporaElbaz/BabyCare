@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using WEB_API.DAL.API;
+using BabyCare.DAL.API;
+using BabyCare.DAL.Models;
 
-using WEB_API.Models;
-
-namespace WEB_API.DAL.Services
+namespace BabyCare.DAL.Services
 {
     public class AppointmentManagementDAL : IAppointmentManagementDAL
     {
@@ -83,36 +82,6 @@ namespace WEB_API.DAL.Services
                 a.AppointmentDate == date &&
                 ((startTime >= a.StartTime && startTime < a.EndTime) ||
                  (endTime > a.StartTime && endTime <= a.EndTime)));
-        }
-
-        //public Task AddAppointmentAsync(Appointment appointment)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        Task<List<Appointment>> IAppointmentManagementDAL.GetAllAppointmentsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Appointment?> IAppointmentManagementDAL.GetAppointmentByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Appointment?> IAppointmentManagementDAL.GetAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<List<Appointment>> IAppointmentManagementDAL.GetAppointmentsByDateAsync(DateOnly date)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public Task UpdateAppointmentAsync(Appointment updatedAppointment)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        } 
     }
 }

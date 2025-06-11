@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WEB_API.Models;
 
-namespace BL.Models
+namespace BabyCare.BL.Models
 {
     public class BabyBL
     {
-        public int Id { get; set; }
-
         public string BabyId { get; set; } = null!;
 
         public string Name { get; set; } = null!;

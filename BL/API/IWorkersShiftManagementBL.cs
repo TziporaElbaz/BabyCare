@@ -1,6 +1,5 @@
-﻿using WEB_API.Models;
-
-namespace WEB_API.BL.API
+﻿
+namespace BabyCare.BL.API
 {
     public interface IWorkersShiftManagementBL
     {

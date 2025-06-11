@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WEB_API.Models;
 
-namespace BL.Models
-{
+namespace BabyCare.BL.Models;
     public class AvailableAppointmentBL
     {
         public int Id { get; set; }
@@ -20,5 +18,5 @@ namespace BL.Models
         public TimeOnly EndTime { get; set; }
 
     }
-}
+
 

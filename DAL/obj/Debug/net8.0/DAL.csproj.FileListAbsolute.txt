@@ -13,3 +13,5 @@ H:\C#\Proj\BabyCare\DAL\obj\Debug\net8.0\refint\DAL.dll
 H:\C#\Proj\BabyCare\DAL\obj\Debug\net8.0\DAL.pdb
 H:\C#\Proj\BabyCare\DAL\obj\Debug\net8.0\DAL.genruntimeconfig.cache
 H:\C#\Proj\BabyCare\DAL\obj\Debug\net8.0\ref\DAL.dll
+H:\C#\Proj\BabyCare\DAL\bin\Debug\net8.0\Data\Database.mdf
+H:\C#\Proj\BabyCare\DAL\bin\Debug\net8.0\Data\Database_log.ldf
