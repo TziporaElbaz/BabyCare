@@ -9,7 +9,7 @@ using WEB_API.DAL.Models;
 
 
 
-namespace WEB_API.WEB_API.Controllers
+namespace WEB_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -42,7 +42,7 @@ namespace WEB_API.WEB_API.Controllers
             return Ok(babyDtos);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("getBaby/{id}")]
         public async Task<ActionResult<BabyBL>> GetBabyById(string id)
         {
             var baby = await _bl.GetBabyById(id);

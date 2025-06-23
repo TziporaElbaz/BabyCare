@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-//using WEB_API.DAL.Models;
-//using System.Data.Entity;
 
 namespace WEB_API.DAL.Models;
 
@@ -32,9 +30,6 @@ public partial class myDatabase : DbContext
     public virtual DbSet<Worker> Workers { get; set; }
 
     public virtual DbSet<WorkerShift> WorkerShifts { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer(
-        @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\Database.mdf;Integrated Security=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

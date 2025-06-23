@@ -1218,7 +1218,10 @@
           "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
-          "BL.dll": {}
+          "BL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "DAL/1.0.0": {
@@ -1230,7 +1233,10 @@
           "Microsoft.Extensions.Configuration": "9.0.5"
         },
         "runtime": {
-          "DAL.dll": {}
+          "DAL.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

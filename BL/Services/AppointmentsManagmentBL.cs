@@ -62,7 +62,7 @@ namespace WEB_API.BL.Services
             {
                 throw new Exception("No appointments found for the given baby ID.");
             }
-            Appointment lastAppointment = babyAppointments.Last(); // מאחר והרשימה כבר מסודרת לפי תאריך
+            Appointment lastAppointment = babyAppointments.Last(); 
             return new DateTime(
                 lastAppointment.AppointmentDate.Year,
                 lastAppointment.AppointmentDate.Month,

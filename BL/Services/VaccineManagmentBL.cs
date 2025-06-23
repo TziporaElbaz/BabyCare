@@ -39,14 +39,13 @@ namespace WEB_API.Services
                 vaccines[vaccine] = false;
             }
             vaccines = vaccines
-               .OrderBy(v => v.Key.MinAgeMonths) // Sort by MinAgeMonths
-               .ThenBy(v => v.Key.MaxAgeMonths) // Then by MaxAgeMonths
+               .OrderBy(v => v.Key.MinAgeMonths) 
+               .ThenBy(v => v.Key.MaxAgeMonths) 
                .ToDictionary(v => v.Key, v => v.Value);
             return vaccines;
         }
         public List<Vaccine> ListOfBabysUnvaccinatedVaccines(string babyId)
         {
-
             List<Vaccine> allVaccines = vaccineManagementDAL.GetAllVaccinesAsync().Result;
             List<Vaccine> allBabysVaccines = babyVaccineManagementDAL.GetVaccinesAsync(babyId).Result;
             foreach (var vaccine in allVaccines)

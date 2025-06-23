@@ -5789,23 +5789,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\אלבז צפורה\\.nuget\\packages\\": {},
+    "C:\\Users\\User\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\WEB_API\\WEB_API.csproj",
       "projectName": "WEB_API",
-      "projectPath": "H:\\BabyCare\\WEB_API\\WEB_API.csproj",
-      "packagesPath": "C:\\Users\\אלבז צפורה\\.nuget\\packages\\",
-      "outputPath": "H:\\BabyCare\\WEB_API\\obj\\",
+      "projectPath": "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\WEB_API\\WEB_API.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\WEB_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\אלבז צפורה\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5821,11 +5821,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "H:\\BabyCare\\BL\\BL.csproj": {
-              "projectPath": "H:\\BabyCare\\BL\\BL.csproj"
+            "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\BL\\BL.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\BL\\BL.csproj"
             },
-            "H:\\BabyCare\\DAL\\DAL.csproj": {
-              "projectPath": "H:\\BabyCare\\DAL\\DAL.csproj"
+            "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\הנדסאים שנה ב\\C#\\BabyCare\\DAL\\DAL.csproj"
             }
           }
         }
@@ -5839,7 +5839,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -5901,7 +5902,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

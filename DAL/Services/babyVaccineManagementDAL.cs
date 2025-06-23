@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,11 +30,11 @@ namespace WEB_API.DAL.Services
         public async Task<List<Vaccine>> GetVaccinesAsync(string babyId)
         {
             return await _context.Set<BabyVaccine>()
-                                 .Include(bv => bv.Baby) // Includes the Baby object (optional if not directly used)
-                                 .Include(bv => bv.Vaccine) // Includes the Vaccine object
-                                 .Where(bv => bv.Baby.BabyId == babyId) // Filters by BabyId
-                                 .Select(bv => bv.Vaccine) // Selects only the Vaccine object
-                                 .ToListAsync(); // Converts the result to a list
+                                 .Include(bv => bv.Baby) 
+                                 .Include(bv => bv.Vaccine) 
+                                 .Where(bv => bv.Baby.BabyId == babyId) 
+                                 .Select(bv => bv.Vaccine)
+                                 .ToListAsync(); 
         }
         //שליפת כל החיסונים של התינוקות
         public async Task<IEnumerable<BabyVaccine>> GetAllAsync()
@@ -45,7 +44,6 @@ namespace WEB_API.DAL.Services
                                  .Include(bv => bv.Vaccine)
                                  .ToListAsync();
         }
-        //עדכון פרטי תינוק
         public async Task<BabyVaccine> UpdateAsync(BabyVaccine babyVaccine)
         {
             _context.Set<BabyVaccine>().Update(babyVaccine);

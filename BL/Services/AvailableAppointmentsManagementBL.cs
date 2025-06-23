@@ -46,11 +46,11 @@ namespace WEB_API.BL.Services
 
             var url = $"{_baseUrl}?v=1&cfg=json&year={year}&month={month}&maj=on&min=off&mod=on&nx=off";
 
-            var response = await _httpClient.GetAsync(url); // שימוש ב-HttpClient המוזרק
+            var response = await _httpClient.GetAsync(url); 
 
             if (response.IsSuccessStatusCode)
             {
-                var jsonString = await response.Content.ReadAsStringAsync(); // await במקום .Result
+                var jsonString = await response.Content.ReadAsStringAsync(); 
                 var json = JObject.Parse(jsonString);
 
                 var items = json["items"];
