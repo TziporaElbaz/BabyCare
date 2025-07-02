@@ -8,13 +8,16 @@ namespace WEB_API.DAL.Models;
 
 public partial class myDatabase : DbContext
 {
+
     public myDatabase()
     {
+       
     }
 
     public myDatabase(DbContextOptions<myDatabase> options)
         : base(options)
     {
+       
     }
 
     public virtual DbSet<Appointment> Appointments { get; set; }
@@ -32,9 +35,9 @@ public partial class myDatabase : DbContext
     public virtual DbSet<Worker> Workers { get; set; }
 
     public virtual DbSet<WorkerShift> WorkerShifts { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer(
-        @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\Database.mdf;Integrated Security=True");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //=> optionsBuilder.UseSqlServer(
+    //    @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Data\Database.mdf;Integrated Security=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -22,10 +22,9 @@ namespace WEB_API.BL.Services
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
 
-        public BabyManagementBL(IBabyManagementDAL dal,IMapper _mapper,IConfiguration _configuration)
+        public BabyManagementBL(IBabyManagementDAL dal)
         {
-            this.configuration = _configuration;
-            mapper = _mapper;
+           
             babyManagementDAL = dal;
         }
 

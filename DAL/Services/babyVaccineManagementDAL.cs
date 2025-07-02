@@ -19,8 +19,26 @@ namespace WEB_API.DAL.Services
             _context = context;
         }
 
-        public async Task<BabyVaccine> CreateAsync(Baby baby, Vaccine vaccine)
+        public async Task<BabyVaccine> CreateAsync(string babyId, int vaccineId)
         {
+            // חיפוש התינוק לפי ה-ID
+           
+            var baby = await _context.Set<Baby>().FirstOrDefaultAsync(b => b.BabyId.Equals(babyId) );
+            if (baby == null)
+           
+                throw new ArgumentException("תינוק לא נמצא");
+            
+        // חיפוש החיסון לפי ה-ID
+
+        var vaccine = await _context.Set<Vaccine>().FirstOrDefaultAsync(v => v.Id == vaccineId);
+            if (vaccine == null)
+            {
+                throw new ArgumentException("חיסון לא נמצא");
+            }
+
+            // כאן תוכל להוסיף לוגיקה עסקית נוספת אם יש צורך
+
+          
             BabyVaccine babyVaccine = new BabyVaccine(baby, vaccine);
             _context.Set<BabyVaccine>().Add(babyVaccine);
             await _context.SaveChangesAsync();
