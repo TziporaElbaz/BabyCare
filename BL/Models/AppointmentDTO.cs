@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WEB_API.DAL.Models;
 
 namespace WEB_API.BL.Models
 {
-    public class AppointmentBL
+    public class AppointmentDTO
     {
         public int Id { get; set; }
 
@@ -20,8 +16,8 @@ namespace WEB_API.BL.Models
 
         public TimeOnly EndTime { get; set; }
 
-        //public virtual Baby Baby { get; set; } = null!;
+        public virtual Baby Baby { get; set; } = null!;
 
-        //public virtual Worker Worker { get; set; } = null!;
+        public virtual Worker Worker { get; set; } = null!;
     }
 }

@@ -8,7 +8,8 @@ namespace WEB_API.DAL.API
         Task AddVaccineAsync(Vaccine vaccine);
         Task DeleteVaccineAsync(string name);
         Task<List<Vaccine>> GetAllVaccinesAsync();
-        Task<Vaccine?> GetVaccineByIdAsync(string name);
+        Task<Vaccine?> GetVaccineByIdAsync(int id);
+        Task<Vaccine?> GetVaccineByNameAsync(string name);
         Task UpdateVaccineDetailsAsync(Vaccine updatedVaccine);
     }
 }

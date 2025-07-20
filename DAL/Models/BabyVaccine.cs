@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WEB_API.DAL.Models;
-public partial class BabyVaccine
+﻿namespace WEB_API.DAL.Models
 {
-    public BabyVaccine() { }
-    public BabyVaccine(Baby baby, Vaccine vaccine)
+    public partial class BabyVaccine
     {
-        BabyId = baby.Id;
-        Baby = baby;
-        Vaccine = vaccine;
-        VaccineId = vaccine.Id;
-        DateGiven = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+        public BabyVaccine() { }
+
+        public BabyVaccine(Baby baby, Vaccine vaccine, DateOnly date)
+        {
+            Baby = baby;
+            Vaccine = vaccine;
+            BabyId = baby.Id;
+            VaccineId = vaccine.Id;
+            DateGiven = date;
+        }
+
+        public int Id { get; set; }
+
+        public int BabyId { get; set; }
+
+        public int VaccineId { get; set; }
+
+        public DateOnly DateGiven { get; set; }
+
+        public virtual Baby Baby { get; set; } = null!;
+
+        public virtual Vaccine Vaccine { get; set; } = null!;
     }
-    public int Id { get; set; }
-
-    public int BabyId { get; set; }
-
-    public int VaccineId { get; set; }
-
-    public DateOnly DateGiven { get; set; }
-
-    public virtual Baby Baby { get; set; } = null!;
-
-    public virtual Vaccine Vaccine { get; set; } = null!;
 }

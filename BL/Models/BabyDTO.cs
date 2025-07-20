@@ -1,17 +1,7 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WEB_API.BL.API;
-
-namespace WEB_API.BL.Models
+﻿namespace WEB_API.BL.Models
 {
-    public class BabyBL
+    public class BabyDTO
     {
-      
-
         public int Id { get; set; }
 
         public string BabyId { get; set; } = null!;
@@ -33,10 +23,6 @@ namespace WEB_API.BL.Models
 
         public double Height { get; set; }
         public bool Gender { get; set; }
-
-
-      
-
 
     }
 }

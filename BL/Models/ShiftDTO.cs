@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WEB_API.BL.Models
-{ 
-    public class ShiftBL
+﻿namespace WEB_API.BL.Models
+{
+    public class ShiftDTO
     {
         public int Id { get; set; }
 

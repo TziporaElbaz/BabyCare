@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using WEB_API.BL.Models;
 using WEB_API.DAL.Models;
 
@@ -14,9 +9,12 @@ namespace WEB_API.BL.Services
     {
         public MappingProfile()
         {
-            CreateMap<AvailableAppointmentBL, AvailableAppointment>().ReverseMap();
-            CreateMap<BabyBL, Baby>().ReverseMap();
-            CreateMap<WorkerBL, Worker>().ReverseMap();
+            CreateMap<AvailableAppointmentDTO, AvailableAppointment>().ReverseMap();
+            CreateMap<BabyDTO, Baby>().ReverseMap();
+            CreateMap<AppointmentDTO, Appointment>().ReverseMap();
+            CreateMap<VaccineDTO, Vaccine>().ReverseMap();
+            CreateMap<WorkerDTO, Worker>().ReverseMap();
+            CreateMap<ShiftDTO, Shift>().ReverseMap();
         }
     }
 }

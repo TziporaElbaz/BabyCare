@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
 
@@ -8,18 +7,10 @@ namespace WEB_API.DAL.Services
     public class AppointmentManagementDAL : IAppointmentManagementDAL
     {
         private readonly myDatabase _context;
-        //private readonly IMapper _mapper;
 
         public AppointmentManagementDAL(myDatabase context)
         {
             _context = context;
-        }
-
-        // Add a new appointment
-        public async Task AddAppointmentAsync(Appointment appointment)
-        {
-            _context.Set<Appointment>().Add(appointment);
-            await _context.SaveChangesAsync();
         }
 
         // Delete an appointment by ID
@@ -38,9 +29,16 @@ namespace WEB_API.DAL.Services
         {
             return await _context.Set<Appointment>().FirstOrDefaultAsync(a => a.Id == id);
         }
-        public async Task<Appointment?> GetAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time)
+
+        //public async Task<Appointment?> GetAppointmentByWorkerAndDatetime(int workerId, DateOnly date, TimeOnly time)
+        //{
+        //    return await _context.Set<Appointment>().FirstOrDefaultAsync(a => a.WorkerId == workerId && a.AppointmentDate == date && a.StartTime == time);
+        //}
+
+        public async Task AddAppointment(Appointment appointment)
         {
-            return await _context.Set<Appointment>().FirstOrDefaultAsync(a => a.WorkerId == workerId && a.AppointmentDate == date && a.StartTime == time);
+            _context.Set<Appointment>().Add(appointment);
+            await _context.SaveChangesAsync();
         }
 
         // Get all appointments
@@ -71,17 +69,10 @@ namespace WEB_API.DAL.Services
         public async Task<List<Appointment>> GetAppointmentsByDateAsync(DateOnly date)
         {
             return await _context.Set<Appointment>()
+                .Include(a => a.Worker)
+                .Include(a => a.Baby)
                 .Where(a => a.AppointmentDate == date)
                 .ToListAsync();
         }
-
-        // Check if a time slot is available
-        public async Task<bool> IsTimeSlotAvailableAsync(DateOnly date, TimeOnly startTime, TimeOnly endTime)
-        {
-            return !await _context.Set<Appointment>().AnyAsync(a =>
-                a.AppointmentDate == date &&
-                ((startTime >= a.StartTime && startTime < a.EndTime) ||
-                 (endTime > a.StartTime && endTime <= a.EndTime)));
-        } 
     }
 }

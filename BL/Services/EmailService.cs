@@ -1,20 +1,16 @@
-﻿using BL.API;
-using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
+using WEB_API.BL.API;
 
-namespace BL.Services
+namespace WEB_API.BL.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly Dictionary<string, (string Code, DateTime Expiration)> _otpStore = new Dictionary<string, (string, DateTime)>();
 
-        public async Task SendVerificationCode(string email)
+        private readonly Dictionary<string, (string Code, DateTime Expiration)> _otpStore = new();
+
+        public async Task SendEmail(string email, string subject, string body)
         {
-            var otp = GenerateOTP();
-            _otpStore[email] = (otp, DateTime.Now.AddMinutes(15));
             var smtpClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
@@ -25,9 +21,9 @@ namespace BL.Services
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("tipatchalav1234@gmail.com"),
-                Subject = "קוד אימות חד-פעמי",
-                Body = $"קוד האימות שלך הוא: {otp}. הקוד תקף ל-15 דקות.",
-                IsBodyHtml = false,
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true,
             };
             mailMessage.To.Add(email);
 
@@ -39,6 +35,14 @@ namespace BL.Services
             {
                 Console.WriteLine($"Error sending email: {ex.Message}");
             }
+        }
+
+        public async Task SendVerificationCode(string email)
+        {
+
+            var otp = GenerateOTP();
+            _otpStore[email] = (otp, DateTime.Now.AddMinutes(15));
+            await SendEmail(email, "קוד אימות חד-פעמי", $"קוד האימות שלך הוא: {otp}. הקוד תקף ל-15 דקות.");
         }
 
         private string GenerateOTP(int length = 6)

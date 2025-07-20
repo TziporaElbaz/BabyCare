@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WEB_API.DAL.Models;
+﻿namespace WEB_API.DAL.Models;
 
 public partial class WorkerShift
 {
@@ -14,9 +11,12 @@ public partial class WorkerShift
     public virtual Shift Shift { get; set; } = null!;
 
     public virtual Worker Worker { get; set; } = null!;
-    public WorkerShift( Shift shift, Worker worker)
-    {   
-
+    public WorkerShift(Shift shift, Worker worker)
+    {
+        WorkerId = worker.Id;
+        ShiftId = shift.Id;
+        Shift = shift;
+        Worker = worker;
     }
     public WorkerShift() { }
 }

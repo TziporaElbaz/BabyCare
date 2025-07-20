@@ -1,23 +1,30 @@
 ﻿using WEB_API.BL.API;
 using WEB_API.DAL.API;
-using WEB_API.DAL.Models;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
 
 namespace WEB_API.BL.Services
 {
     public class WorkersShiftsManagementBL : IWorkersShiftManagementBL
     {
-        private readonly IShiftManagementDAL shiftsManagement;
-        private readonly IWorkerShiftManagementDAL workerShiftsManagement;
-        private readonly IConfiguration _configuration;
+        private readonly IWorkerShiftManagementDAL workerShiftManagement;
+        private readonly IWorkersManagmentDAL workersManagment;
+        private readonly IShiftManagementDAL shiftManagement;
 
-
-        public WorkersShiftsManagementBL(IShiftManagementDAL _shiftManagementBL, IWorkerShiftManagementDAL _workerShiftManagementDAL)
+        public WorkersShiftsManagementBL(IWorkerShiftManagementDAL _workerShiftManagementDAL, IWorkersManagmentDAL _workersManagmentDAL, IShiftManagementDAL _shiftManagement)
         {
-            shiftsManagement = _shiftManagementBL;
-            workerShiftsManagement = _workerShiftManagementDAL;
+            workerShiftManagement = _workerShiftManagementDAL;
+            workersManagment = _workersManagmentDAL;
+            shiftManagement = _shiftManagement;
         }
+        public async Task AddShiftToWorker(int shiftId, string workerId)
+        {
+            var shift = await shiftManagement.GetShiftByIdAsync(shiftId);
+            var worker = await workersManagment.GetWorkerByIdAsync(workerId);
 
+            if (shift == null || worker == null)
+            {
+                throw new ArgumentNullException("Shift or Worker cannot be null");
+            }
+            await workerShiftManagement.AddWorkerShiftAsync(worker, shift);
+        }
     }
 }

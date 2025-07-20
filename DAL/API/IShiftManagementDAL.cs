@@ -1,8 +1,8 @@
 ﻿
 using WEB_API.DAL.Models;
 
-namespace WEB_API.DAL.API 
-{ 
+namespace WEB_API.DAL.API
+{
     public interface IShiftManagementDAL
     {
         Task AddShiftAsync(Shift shift);

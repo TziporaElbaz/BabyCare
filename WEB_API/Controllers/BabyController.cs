@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
 using WEB_API.BL.API;
 using WEB_API.BL.Models;
 using WEB_API.DAL.Models;
-
-
 
 namespace WEB_API.Controllers
 {
@@ -17,45 +12,54 @@ namespace WEB_API.Controllers
     {
         private readonly IBabyManagementBL _bl;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public BabiesController(IBabyManagementBL bl, IMapper mapper)
+        public BabiesController(IBabyManagementBL bl, IMapper mapper, IJwtService jwtService)
         {
             _bl = bl;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<BabyBL>> AddBaby([FromBody] BabyBL babyDto)
+        [HttpPost("addBaby")]
+        public async Task<ActionResult<BabyDTO>> AddBaby([FromBody] BabyDTO babyDto)
         {
-            var babyEntity = _mapper.Map<Baby>(babyDto);
-            await _bl.AddBaby(babyEntity);
+            try
+            {
+                await _bl.AddBaby(babyDto);
 
-            var babyCreatedDto = _mapper.Map<BabyBL>(babyEntity);
-            return CreatedAtAction(nameof(GetBabyById), new { id = babyEntity.BabyId}, babyCreatedDto);
+                var token = _jwtService.GenerateToken(babyDto.BabyId, "regularUser");
+
+                _jwtService.SetTokenCookie(Response, token);
+
+                return CreatedAtAction(nameof(GetBabyById), new { id = babyDto.BabyId }, new { baby = babyDto, token });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error adding baby: {ex.Message}");
+            }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<BabyBL>>> GetAllBabies()
+        [HttpGet("getAllBabies")]
+        public async Task<ActionResult<List<BabyDTO>>> GetAllBabies()
         {
             var babies = await _bl.GetAllBabies();
-            var babyDtos = _mapper.Map<List<BabyBL>>(babies);
-            return Ok(babyDtos);
+            return Ok(babies);
         }
 
         [HttpGet("getBaby/{id}")]
-        public async Task<ActionResult<BabyBL>> GetBabyById(string id)
+        public async Task<ActionResult<BabyDTO>> GetBabyById(string id)
         {
             var baby = await _bl.GetBabyById(id);
             if (baby == null)
             {
-                return NotFound();
+                return NotFound("baby not found");
             }
-            var babyDto = _mapper.Map<BabyBL>(baby);
-            return Ok(babyDto);
+            return Ok(baby);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateBabyDetails(string id, [FromBody] BabyBL updatedBabyDto)
+        public async Task<ActionResult> UpdateBabyDetails(string id, [FromBody] BabyDTO updatedBabyDto)
         {
             if (id != updatedBabyDto.BabyId)
                 return BadRequest("ID mismatch");
@@ -81,7 +85,7 @@ namespace WEB_API.Controllers
                 return NoContent();
             }
             catch (KeyNotFoundException)
-    {
+            {
                 return NotFound("Baby not found");
             }
         }

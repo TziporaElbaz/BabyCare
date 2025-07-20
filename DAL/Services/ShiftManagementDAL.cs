@@ -19,7 +19,6 @@ namespace WEB_API.DAL.Services
             await _context.SaveChangesAsync();
         }
 
-        // מחיקת משמרת לפי ID
         public async Task DeleteShiftAsync(int day, string shiftType)
         {
             var shift = await _context.Set<Shift>().FirstOrDefaultAsync(s => s.Day == day && s.ShiftType == shiftType);
@@ -29,6 +28,7 @@ namespace WEB_API.DAL.Services
                 await _context.SaveChangesAsync();
             }
         }
+
         public async Task<Shift?> GetShiftByIdAsync(int id)
         {
             return await _context.Set<Shift>().FirstOrDefaultAsync(s => s.Id == id);
@@ -37,16 +37,14 @@ namespace WEB_API.DAL.Services
         public async Task<List<Shift>> GetShiftsByDayAsync(int day)
         {
             return await _context.Set<Shift>()
-                         .Where(s => s.Day == day) // מסנן לפי יום
+                         .Where(s => s.Day == day)
                          .ToListAsync();
         }
-
 
         public async Task<List<Shift>> GetAllShiftsAsync()
         {
             return await _context.Set<Shift>().ToListAsync();
         }
-
 
         public async Task UpdateShiftDetailsAsync(Shift updatedShift)
         {

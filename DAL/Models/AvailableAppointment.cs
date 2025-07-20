@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WEB_API.DAL.Models;
-public partial class AvailableAppointment
+﻿namespace WEB_API.DAL.Models
 {
-    public int Id { get; set; }
+    public partial class AvailableAppointment
+    {
+        public int Id { get; set; }
 
-    public int WorkerId { get; set; }
+        public int WorkerId { get; set; }
 
-    public DateOnly AppointmentDate { get; set; }
+        public DateOnly AppointmentDate { get; set; }
 
-    public TimeOnly StartTime { get; set; }
+        public TimeOnly StartTime { get; set; }
 
-    public TimeOnly EndTime { get; set; }
+        public TimeOnly EndTime { get; set; }
 
-    public virtual Worker Worker { get; set; } = null!;
+        public virtual Worker Worker { get; set; } = null!;
+    }
 }

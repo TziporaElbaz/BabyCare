@@ -1,68 +1,93 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.Internal;
 using WEB_API.BL.API;
+using WEB_API.BL.Models;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
 using WEB_API.DAL.Services;
 
-
 namespace WEB_API.Services
 {
- 
-        public class VaccineManagementBL : IVaccineManagementBL
+    public class VaccineManagementBL : IVaccineManagementBL
     {
         IBabyManagementBL BabyManagementBL;
         IVaccineManagementDAL vaccineManagementDAL;
         IBabyVaccineManagementDAL babyVaccineManagementDAL;
-
-        public VaccineManagementBL(IVaccineManagementDAL _vaccineManagementDAL, IBabyVaccineManagementDAL _babyVaccineManagementDAL, IBabyManagementBL _BabyManagementBL)
+        IMapper mapper;
+        public VaccineManagementBL(IVaccineManagementDAL _vaccineManagementDAL, IBabyVaccineManagementDAL _babyVaccineManagementDAL, IBabyManagementBL _BabyManagementBL, IMapper _mapper)
         {
             vaccineManagementDAL = _vaccineManagementDAL;
             babyVaccineManagementDAL = _babyVaccineManagementDAL;
             BabyManagementBL = _BabyManagementBL;
+            mapper = _mapper;
         }
-        public Dictionary<Vaccine, bool> ListOfBabysVaccines(string id)
+
+        public async Task<Dictionary<string, string>> ListOfBabysVaccines(string babyId)
         {
-            Dictionary<Vaccine, bool> vaccines = new Dictionary<Vaccine, bool>();
-            List<Vaccine> allVaccines = ListOfBabysUnvaccinatedVaccines(id);
-            List<Vaccine> allBabysVaccines = babyVaccineManagementDAL.GetVaccinesAsync(id).Result;
-            foreach (var vaccine in allBabysVaccines)
-            {
-                vaccines[vaccine] = true;
-            }
+            Dictionary<string, string> vaccines = new Dictionary<string, string>();
+            List<Vaccine> allVaccines = await vaccineManagementDAL.GetAllVaccinesAsync();
+            List<Vaccine> allBabysVaccines = await babyVaccineManagementDAL.GetVaccinesAsync(babyId);
+
             foreach (var vaccine in allVaccines)
             {
-
-                vaccines[vaccine] = false;
+                var babyVaccine = allBabysVaccines.FirstOrDefault(bv => bv.Id == vaccine.Id);
+                var specificBabyVaccine = await babyVaccineManagementDAL.GetBabyVaccineAsync(babyId, vaccine.Id);
+                if (babyVaccine != null && specificBabyVaccine.DateGiven <= DateOnly.FromDateTime(DateTime.Now))
+                {
+                    vaccines[vaccine.Name] = "given";
+                }
+                else if (babyVaccine != null && specificBabyVaccine.DateGiven > DateOnly.FromDateTime(DateTime.Now))
+                {
+                    vaccines[vaccine.Name] = "upcoming";
+                }
+                else
+                {
+                    vaccines[vaccine.Name] = "not given";
+                }
             }
-            vaccines = vaccines
-               .OrderBy(v => v.Key.MinAgeMonths) 
-               .ThenBy(v => v.Key.MaxAgeMonths) 
-               .ToDictionary(v => v.Key, v => v.Value);
-            return vaccines;
-        }
-        public List<Vaccine> ListOfBabysUnvaccinatedVaccines(string babyId)
-        {
-            List<Vaccine> allVaccines = vaccineManagementDAL.GetAllVaccinesAsync().Result;
-            List<Vaccine> allBabysVaccines = babyVaccineManagementDAL.GetVaccinesAsync(babyId).Result;
-            foreach (var vaccine in allVaccines)
-            {
-                if (allBabysVaccines.FirstOrDefault(v => v.Name == vaccine.Name) == null)
-                    allVaccines.Remove(vaccine);
-            }
-            return allVaccines;
-        }
-        public List<Vaccine> ShowUpcomingVaccines(string babyId)
-        {
-            int babyAge = BabyManagementBL.BabysCurrentAge(babyId);
-            List<Vaccine> babysUnvaccinatedVaccines = ListOfBabysUnvaccinatedVaccines(babyId);
-            foreach (Vaccine vaccine in babysUnvaccinatedVaccines)
-            {
-                if (vaccine.MinAgeMonths > (babyAge + 3))
 
+            var sortedVaccines = allVaccines.Concat(allBabysVaccines)
+                .GroupBy(v => v.Name)
+                .Select(g => g.First())
+                .OrderBy(v => v.MinAgeMonths)
+                .ThenBy(v => v.MaxAgeMonths)
+                .ToList();
+
+            var sortedVaccineDictionary = sortedVaccines.ToDictionary(v => v.Name, v => vaccines[v.Name]);
+
+            return sortedVaccineDictionary;
+        }
+
+        public async Task<List<VaccineDTO>?> ListOfBabysUnvaccinatedVaccines(string babyId)
+        {
+            List<Vaccine> allVaccines = await vaccineManagementDAL.GetAllVaccinesAsync();
+            List<Vaccine> allBabysVaccines = await babyVaccineManagementDAL.GetVaccinesAsync(babyId);
+
+            if (allBabysVaccines != null)
+            {
+                List<VaccineDTO> unvaccinatedVaccines = new List<VaccineDTO>();
+
+                foreach (var vaccine in allVaccines)
+                {
+                    if (allBabysVaccines.FirstOrDefault(v => v.Name.Equals(vaccine.Name)) == null)
+                    {
+                        var vaccineDTO = mapper.Map<VaccineDTO>(vaccine);
+                        unvaccinatedVaccines.Add(vaccineDTO);
+                    }
+                }
+
+                return unvaccinatedVaccines;
+            }
+            return null;
+        }
+
+        public async Task<List<VaccineDTO>> ShowUpcomingVaccines(string babyId)
+        {
+            int babyAge = BabyManagementBL.GetBabysAge(babyId);
+            List<VaccineDTO> babysUnvaccinatedVaccines = await ListOfBabysUnvaccinatedVaccines(babyId);
+            foreach (VaccineDTO vaccine in babysUnvaccinatedVaccines)
+            {
+                if (vaccine.MinAgeMonths > (babyAge + 3) || vaccine.MinAgeMonths < babyAge)
                     babysUnvaccinatedVaccines.Remove(vaccine);
             }
 

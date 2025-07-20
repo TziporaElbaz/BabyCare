@@ -1,30 +1,39 @@
-﻿using WEB_API.DAL.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using WEB_API.DAL.API;
+using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.Services
 {
     public class AvailableAppointmentManagementDAL : IAvailableAppointmentManagementDAL
     {
+
         private readonly myDatabase _context;
 
         public AvailableAppointmentManagementDAL(myDatabase context)
         {
             _context = context;
         }
-
-        // Add a new available appointment
-        public async Task AddAvailableAppointmentAsync(AvailableAppointment appointment)
+        public async Task<List<AvailableAppointment>> GetAllAvailableAppointmentsAsync()
         {
-            _context.Set<AvailableAppointment>().Add(appointment);
-            await _context.SaveChangesAsync();
+            var currentDate = DateOnly.FromDateTime(DateTime.Now);
+
+            return await _context.Set<AvailableAppointment>()
+                        .Include(a => a.Worker)
+                        .Where(a => a.AppointmentDate >= currentDate)
+                        .OrderBy(a => a.AppointmentDate)
+                        .ThenBy(a => a.StartTime)
+                        .ThenBy(a => a.Worker.WorkerType)
+                        .ToListAsync();
         }
 
-        // Delete an available appointment by ID
+        public async Task<List<AvailableAppointment>> GetAppointmentsByDateAsync(DateOnly date)
+        {
+            return await _context.Set<AvailableAppointment>()
+                .Include(a => a.Worker)
+                .Where(a => a.AppointmentDate == date)
+                .ToListAsync();
+        }
+
         public async Task DeleteAvailableAppointmentAsync(int id)
         {
             var appointment = await _context.Set<AvailableAppointment>().FirstOrDefaultAsync(a => a.Id == id);
@@ -35,58 +44,43 @@ namespace WEB_API.DAL.Services
             }
         }
 
-        // Get an available appointment by ID
-        public async Task<AvailableAppointment?> GetAvailableAppointmentByIdAsync(int id)
+        public async Task AddAvailableAppointmentAsync(AvailableAppointment appointment)
         {
-            return await _context.Set<AvailableAppointment>().FirstOrDefaultAsync(a => a.Id == id);
-        }
-
-        // Get all available appointments
-        public async Task<List<AvailableAppointment>> GetAllAvailableAppointmentsAsync()
-        {
-            return await _context.Set<AvailableAppointment>().ToListAsync();
-        }
-
-        // Update an existing available appointment
-        public async Task UpdateAvailableAppointmentAsync(AvailableAppointment updatedAppointment)
-        {
-            var existingAppointment = await _context.Set<AvailableAppointment>()
-                .FirstOrDefaultAsync(a => a.Id == updatedAppointment.Id);
-
-            if (existingAppointment == null)
-                throw new KeyNotFoundException($"AvailableAppointment with Id {updatedAppointment.Id} not found.");
-
-            existingAppointment.WorkerId = updatedAppointment.WorkerId;
-            existingAppointment.AppointmentDate = updatedAppointment.AppointmentDate;
-            existingAppointment.StartTime = updatedAppointment.StartTime;
-            existingAppointment.EndTime = updatedAppointment.EndTime;
-
+            _context.Set<AvailableAppointment>().Add(appointment);
             await _context.SaveChangesAsync();
         }
 
-        // Get an available appointment by worker ID, date, and time
-        public async Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(string workerId, DateOnly date, TimeOnly time)
+        public async Task<List<AvailableAppointment>> GetAppointmentsByWorkerType(string workerType)
         {
             return await _context.Set<AvailableAppointment>()
-                .FirstOrDefaultAsync(a => a.WorkerId.Equals( workerId) && a.AppointmentDate == date && a.StartTime == time);
-        }
-
-        // Get all available appointments for a specific date
-        public async Task<List<AvailableAppointment>> GetAvailableAppointmentsByDateAsync(DateOnly date)
-        {
-            return await _context.Set<AvailableAppointment>()
-                .Where(a => a.AppointmentDate == date)
+                .Include(a => a.Worker)
+                .Where(a => a.Worker.WorkerType.Equals(workerType) &&
+                            a.AppointmentDate >= DateOnly.FromDateTime(DateTime.Now))
                 .ToListAsync();
         }
 
-        // Check if a time slot is available
+        //public async Task<List<AvailableAppointment>> GetAppointmentsByWorkerTypeAndMonth(string workerType, int month)
+        //{
+        //    return await _context.Set<AvailableAppointment>()
+        //        .Include(a => a.Worker.WorkerType.Equals(workerType) && a.AppointmentDate.Month == month)
+        //        .ToListAsync(); ;
+        //}
+        public async Task<AvailableAppointment?> GetAvailableAppointmentByWorkerAndDatetime(DateOnly date, TimeOnly time, string workerType)
+        {
+            return await _context.Set<AvailableAppointment>()
+                .Include(a => a.Worker)
+                .Where(a => a.AppointmentDate == date && a.StartTime == time && a.Worker.WorkerType.Equals(workerType))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> IsTimeSlotAvailableAsync(DateOnly date, TimeOnly startTime, TimeOnly endTime)
         {
-            return !await _context.Set<AvailableAppointment>().AnyAsync(a =>
+            return await _context.Set<AvailableAppointment>().AnyAsync(a =>
                 a.AppointmentDate == date &&
-                ((startTime >= a.StartTime && startTime < a.EndTime) ||
-                 (endTime > a.StartTime && endTime <= a.EndTime)));
+                (startTime == a.StartTime && endTime == a.EndTime));
         }
 
     }
 }
+
+

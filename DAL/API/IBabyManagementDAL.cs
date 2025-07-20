@@ -10,5 +10,7 @@ namespace WEB_API.DAL.API
         Task DeleteBabyAsync(Baby baby);
         Task<List<Baby>> GetAllBabiesAsync();
         Task UpdateBabyDetailsAsync(Baby updatedBaby);
+        Task AddAppointmentToBaby(Baby baby, Appointment appointment);
+        Task<List<Appointment>> GetBabyAppointments(Baby baby);
     }
 }

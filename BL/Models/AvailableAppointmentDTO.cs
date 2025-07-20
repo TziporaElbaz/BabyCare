@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WEB_API.DAL.Models;
 
-namespace WEB_API.BL.Models;
-    public class AvailableAppointmentBL
+namespace WEB_API.BL.Models
+{
+    public class AvailableAppointmentDTO
     {
         public int Id { get; set; }
 
@@ -16,7 +13,7 @@ namespace WEB_API.BL.Models;
         public TimeOnly StartTime { get; set; }
 
         public TimeOnly EndTime { get; set; }
-
+        public Worker Worker { get; internal set; }
     }
-
+}
 

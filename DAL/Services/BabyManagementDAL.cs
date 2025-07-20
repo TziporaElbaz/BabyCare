@@ -15,7 +15,8 @@ namespace WEB_API.DAL.Services
 
         public async Task<Baby?> GetBabyByIdAsync(string id)
         {
-            return await _context.Set<Baby>().FirstOrDefaultAsync(b => b.BabyId.Equals(id));
+            return await _context.Set<Baby>().Include(b => b.Appointments)
+                         .FirstOrDefaultAsync(b => b.BabyId.Equals(id));
         }
 
         public async Task AddBabyAsync(Baby baby)
@@ -39,6 +40,24 @@ namespace WEB_API.DAL.Services
         {
             _context.Set<Baby>().Update(updatedBaby);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task AddAppointmentToBaby(Baby baby, Appointment appointment)
+        {
+            baby.Appointments.Add(appointment);
+            _context.Set<Baby>().Update(baby);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Appointment>> GetBabyAppointments(Baby baby)
+        {
+            var appointments = await _context.Set<Appointment>()
+                .Include(a => a.Worker)
+                .Where(a => a.BabyId == baby.Id)
+                .OrderBy(a => a.AppointmentDate)
+                .ToListAsync();
+
+            return appointments;
         }
     }
 }

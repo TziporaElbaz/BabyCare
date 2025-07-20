@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WEB_API.DAL.Models;
+﻿namespace WEB_API.DAL.Models;
 
 public partial class Appointment
 {

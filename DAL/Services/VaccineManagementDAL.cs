@@ -13,7 +13,6 @@ namespace WEB_API.DAL.Services
             _context = context;
         }
 
-
         public async Task AddVaccineAsync(Vaccine vaccine)
         {
             _context.Set<Vaccine>().Add(vaccine);
@@ -30,18 +29,22 @@ namespace WEB_API.DAL.Services
             }
         }
 
-
-        public async Task<Vaccine?> GetVaccineByIdAsync(string name)
+        public async Task<Vaccine?> GetVaccineByNameAsync(string name)
         {
             return await _context.Set<Vaccine>().FirstOrDefaultAsync(v => v.Name == name);
         }
 
+        public async Task<Vaccine?> GetVaccineByIdAsync(int id)
+        {
+            return await _context.Set<Vaccine>()
+                         .Include(v => v.BabyVaccines)
+                         .FirstOrDefaultAsync(v => v.Id == id);
+        }
 
         public async Task<List<Vaccine>> GetAllVaccinesAsync()
         {
             return await _context.Set<Vaccine>().ToListAsync();
         }
-
 
         public async Task UpdateVaccineDetailsAsync(Vaccine updatedVaccine)
         {

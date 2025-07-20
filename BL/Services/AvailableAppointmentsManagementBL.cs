@@ -1,14 +1,10 @@
-﻿using System.Globalization;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using WEB_API.BL.API;
+using WEB_API.BL.Models;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
-using WEB_API.BL.Models;
-using AutoMapper;
-
 
 namespace WEB_API.BL.Services
 {
@@ -19,8 +15,8 @@ namespace WEB_API.BL.Services
         private readonly IShiftManagementDAL _shiftManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        private readonly IAvailableAppointmentManagementDAL _dal;
-        private readonly HttpClient _httpClient; 
+        private readonly IAvailableAppointmentManagementDAL availableAppointmentManagementDAL;
+        private readonly HttpClient _httpClient;
 
         public AvailableAppointmentsManagementBL(
             IWorkerShiftManagementDAL shiftWorkerManager,
@@ -34,8 +30,8 @@ namespace WEB_API.BL.Services
             _shiftManager = shiftManager;
             _configuration = configuration;
             _mapper = mapper;
-            _dal = dal;
-            _httpClient = httpClient; 
+            availableAppointmentManagementDAL = dal;
+            _httpClient = httpClient;
         }
 
         public async Task<bool> IsHoliday(DateTime date)
@@ -46,11 +42,11 @@ namespace WEB_API.BL.Services
 
             var url = $"{_baseUrl}?v=1&cfg=json&year={year}&month={month}&maj=on&min=off&mod=on&nx=off";
 
-            var response = await _httpClient.GetAsync(url); 
-
+            var response = await _httpClient.GetAsync(url);
+            Console.WriteLine(response);
             if (response.IsSuccessStatusCode)
             {
-                var jsonString = await response.Content.ReadAsStringAsync(); 
+                var jsonString = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(jsonString);
 
                 var items = json["items"];
@@ -81,40 +77,179 @@ namespace WEB_API.BL.Services
             }
         }
 
-        public async Task AddAvailableAppointmentsToWorkers(DateTime date)
+        public async Task<List<AvailableAppointmentDTO>> GetAllAvailableAppointments()
         {
-            List<Shift> shifts = await _shiftManager.GetShiftsByDayAsync((int)date.DayOfWeek);
+            var appointments = await availableAppointmentManagementDAL.GetAllAvailableAppointmentsAsync();
+            return appointments.Select(a => _mapper.Map<AvailableAppointmentDTO>(a)).ToList();
+        }
+
+        //public async Task<List<AvailableAppointment>> findNurseAppointments(string babyId)
+        //{
+        //    // שלב 1: קבלת חיסונים שלא בוצעו
+        //    List<Vaccine> unvaccinatedVaccines = await _vaccineManagementBL.ListOfBabysUnvaccinatedVaccines(babyId);
+
+        //    if (unvaccinatedVaccines == null || !unvaccinatedVaccines.Any())
+        //        throw new Exception("No unvaccinated vaccines found for the given baby ID.");
+
+        //    // שלב 2: קביעת גיל התינוק
+        //    int babyAgeMonths = _babyManagementBL.GetBabysAge(babyId);
+
+        //    // שלב 3: חישוב טווח גילאים לחיסונים
+        //    Vaccine firstVaccine = unvaccinatedVaccines.First();
+        //    int minAge = firstVaccine.MinAgeMonths;
+        //    int maxAge = firstVaccine.MaxAgeMonths;
+
+
+        //    DateTime earliestAppointmentDate = DateTime.Now.AddMonths(minAge - babyAgeMonths);
+        //    DateTime latestAppointmentDate = earliestAppointmentDate.AddMonths(1);
+        //    DateOnly earliestDate = DateOnly.FromDateTime(earliestAppointmentDate);
+        //    DateOnly latestDate = DateOnly.FromDateTime(earliestAppointmentDate.AddMonths(1));
+
+
+        //    // שלב 4: שליפת תורים מתאימים
+        //    var allNurseAppointments = await availableAppointmentManagementDAL.GetAppointmentsByWorkerType("nurse");
+
+        //    var appointmentsInRange = allNurseAppointments
+        //        .Where(a => a.AppointmentDate.CompareTo(earliestDate) >= 0 && a.AppointmentDate.CompareTo(latestDate.AddMonths(1)) <= 0)
+        //        .ToList();
+
+        //    if (!appointmentsInRange.Any())
+        //        throw new Exception("No available appointments found for the required time range.");
+
+        //    return appointmentsInRange;
+        //}
+
+
+        //public async Task<List<AvailableAppointment>> findDoctorAppointments()
+        //{
+        //    var availableAppointments = (await availableAppointmentManagementDAL.GetAppointmentsByWorkerType("Developmental Pediatrician")).
+        //            FindAll(a => a.AppointmentDate.ToDateTime(TimeOnly.MinValue) >= DateTime.Now
+        //         && a.AppointmentDate.ToDateTime(TimeOnly.MinValue) < DateTime.Now.AddMonths(1));
+        //    return availableAppointments;
+        //}
+        //public async Task<List<AvailableAppointment>> findPhysicalTherapistAppointments(string physiotherapistName, DateOnly startDate, int sessionsCount)
+        //{
+
+        //    DateOnly endDate = startDate.AddMonths(1);
+
+        //    int workerId = await _workersManagmentDAL.getWorkerIdByName(physiotherapistName);
+        //    // Filter appointments by worker type, therapist name, and date range
+        //    var availableAppointments = (await availableAppointmentManagementDAL
+        //        .GetAppointmentsByWorkerType("physical Therapist"))
+        //        .FindAll(a =>
+        //            a.AppointmentDate >= startDate &&
+        //            a.AppointmentDate <= endDate && a.WorkerId == workerId
+        //        );
+        //    foreach (var firstAppointment in availableAppointments)
+        //    {
+        //        var candidateSeries = new List<AvailableAppointment> { firstAppointment };
+        //        bool seriesFound = true;
+        //        var currDate = firstAppointment.AppointmentDate;
+        //        var currHour = firstAppointment.StartTime;
+
+        //        for (int i = 1; i < sessionsCount; i++)
+        //        {
+        //            var nextDate = currDate.AddDays(7);
+        //            var nextAppointment = availableAppointments.FirstOrDefault(
+        //                a => a.AppointmentDate == nextDate && a.StartTime == currHour);
+
+        //            if (nextAppointment != null)
+        //            {
+        //                candidateSeries.Add(nextAppointment);
+        //                currDate = nextDate;
+        //            }
+        //            else
+        //            {
+        //                seriesFound = false;
+        //                break;
+        //            }
+        //        }
+
+        //        if (seriesFound)
+        //        {
+        //            return candidateSeries;
+        //        }
+        //    }
+
+        //    return new List<AvailableAppointment>();
+        //}
+
+        public async Task<List<AvailableAppointmentDTO>> FindSpecificTypeOfAvailableAppointments(string worketType)
+        {
+            var appointments = await availableAppointmentManagementDAL.GetAppointmentsByWorkerType(worketType);
+            return appointments.Select(a => _mapper.Map<AvailableAppointmentDTO>(a)).ToList();
+        }
+
+        public async Task<List<AvailableAppointmentDTO>> FindAllAvailableAppointmentsByDate(DateOnly date)
+        {
+            var appointments = await availableAppointmentManagementDAL.GetAppointmentsByDateAsync(date);
+            return appointments.Select(a => _mapper.Map<AvailableAppointmentDTO>(a)).ToList();
+        }
+
+        public async Task<bool> IsTimeSlotAvailableAsync(DateOnly date, TimeOnly startTime, string workerType)
+        {
+            string normalizedWorkerType = workerType.Replace(" ", "").ToLower();
+
+            var appointmentDurationsSection = _configuration.GetSection("WorkerAppointmentDuration");
+            var durationValue = appointmentDurationsSection[normalizedWorkerType];
+
+            if (int.TryParse(durationValue, out int duration))
+            {
+                return await availableAppointmentManagementDAL.IsTimeSlotAvailableAsync(date, startTime, startTime.AddMinutes(duration));
+            }
+
+            return false;
+        }
+
+        public async Task AddAvailableAppointmentsToAllWorkers(DateTime date)
+        {
+            if (date < DateTime.Now)
+            {
+                throw new ArgumentException("The date must be in the future.");
+            }
+            int dayOfWeek = (int)date.DayOfWeek;
+            List<Shift> shifts = await _shiftManager.GetShiftsByDayAsync(dayOfWeek + 1);
+
             var workerTypes = _configuration.GetSection("WorkerAppointmentDuration").GetChildren()
                                  .Select(x => x.Key)
                                  .ToList();
-            if (!await IsHoliday(date)) 
+
+            if (!await IsHoliday(date))
             {
                 foreach (Shift shift in shifts)
                 {
                     List<Worker> workers = await _shiftWorkerManager.GetWorkersByShiftID(shift.Id);
                     foreach (Worker worker in workers)
                     {
-                        if (!workerTypes.Contains(worker.WorkerType))
+                        string normalizedWorkerType = worker.WorkerType.Replace(" ", "").ToLower();
+
+                        var normalizedWorkerTypes = workerTypes
+                            .Select(x => x.Replace(" ", "").ToLower())
+                            .ToList();
+
+                        if (!normalizedWorkerTypes.Contains(normalizedWorkerType))
                         {
-                            throw new Exception("Invalid worker");
+                            Console.WriteLine($"Skipped worker with type: {worker.WorkerType} (not eligible for appointments)");
+                            continue;
                         }
 
-                        var appointmentDurations = _configuration[$"WorkerAppointmentDuration:{worker.WorkerType}"];
+                        var appointmentDurations = _configuration[$"WorkerAppointmentDuration:{worker.WorkerType.Replace(" ", "")}"];
                         if (int.TryParse(appointmentDurations, out int appointmentDuration))
                         {
                             for (TimeOnly time = shift.StartTime; time <= shift.EndTime; time = time.AddMinutes(appointmentDuration))
                             {
-                                AvailableAppointmentBL appointment = new AvailableAppointmentBL
+                                AvailableAppointmentDTO appointment = new AvailableAppointmentDTO
                                 {
                                     WorkerId = worker.Id,
                                     AppointmentDate = DateOnly.FromDateTime(date),
                                     StartTime = time,
-                                    EndTime = time.AddMinutes(appointmentDuration)
+                                    EndTime = time.AddMinutes(appointmentDuration),
+                                    Worker = worker
                                 };
 
                                 var appointmentEntity = _mapper.Map<AvailableAppointment>(appointment);
 
-                                await _dal.AddAvailableAppointmentAsync(appointmentEntity);
+                                await availableAppointmentManagementDAL.AddAvailableAppointmentAsync(appointmentEntity);
                             }
                         }
                     }

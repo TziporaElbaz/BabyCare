@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace  WEB_API.BL.Models
+﻿namespace WEB_API.BL.Models
 {
-    public class WorkerBL
+    public class WorkerDTO
     {
         public int Id { get; set; }
 
