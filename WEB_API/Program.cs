@@ -1,4 +1,5 @@
 using AutoMapper;
+using BL.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("https://localhost:3000")
                           .AllowCredentials()
                           .AllowAnyMethod()
                           .AllowAnyHeader());
@@ -38,7 +39,7 @@ builder.Services.AddDbContext<myDatabase>(options =>
 builder.Services.AddScoped<IBabyManagementDAL, BabyManagementDAL>();
 builder.Services.AddScoped<IBabyManagementBL, BabyManagementBL>();
 builder.Services.AddScoped<IAvailableAppointmentManagementDAL, AvailableAppointmentManagementDAL>();
-builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddScoped<IBabyVaccineManagementDAL, BabyVaccineManagementDAL>();
 builder.Services.AddScoped<IAppointmentManagementDAL, AppointmentManagementDAL>();
 builder.Services.AddScoped<IAppointmentsManagementBL, AppointmentsManagementBL>();

@@ -25,6 +25,7 @@ namespace WEB_API.Controllers
             _jwtService = jwtService;
         }
 
+   
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromQuery] string id, [FromQuery] string email)
         {
@@ -33,7 +34,8 @@ namespace WEB_API.Controllers
             {
                 var token = _jwtService.GenerateToken(baby.BabyId, "regularUser");
                 _jwtService.SetTokenCookie(Response, token);
-                return Ok(new { userExists = true, userType = "regularUser", token });
+                // כאן להחזיר גם את babyId ב-response
+                return Ok(new { userExists = true, userType = "regularUser", token, babyId = baby.BabyId });
             }
 
             var worker = await _workerManagement.GetWorkerByIdAsync(id);
@@ -98,6 +100,7 @@ namespace WEB_API.Controllers
         [HttpPost("sendVarificationCode")]
         public async Task<IActionResult> SendVerificationCode([FromQuery] string email)
         {
+            Console.WriteLine($"[SEND OTP] email={email}");
             if (string.IsNullOrEmpty(email))
             {
                 return BadRequest("Email is required");
@@ -109,6 +112,7 @@ namespace WEB_API.Controllers
         [HttpPost("validate")]
         public IActionResult ValidateOTP([FromQuery] string email, [FromQuery] string otp)
         {
+            Console.WriteLine($"[VALIDATE OTP] email={email}, otp={otp}");
             Console.WriteLine("In code checking");
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(otp))

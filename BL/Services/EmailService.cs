@@ -61,14 +61,18 @@ namespace WEB_API.BL.Services
 
         public bool ValidateOTP(string email, string otp)
         {
+            Console.WriteLine($"[BL] otpStore contains: {string.Join(',', _otpStore.Keys)}");
             if (_otpStore.TryGetValue(email, out var storedOtp))
+
             {
+                Console.WriteLine($"[BL] otpStore contains: {string.Join(',', _otpStore.Keys)}");
                 if (DateTime.Now <= storedOtp.Expiration && storedOtp.Code == otp)
                 {
                     _otpStore.Remove(email);
                     return true;
                 }
             }
+            Console.WriteLine($"[BL] otpStore contains: {string.Join(',', _otpStore.Keys)}");
             return false;
         }
     }

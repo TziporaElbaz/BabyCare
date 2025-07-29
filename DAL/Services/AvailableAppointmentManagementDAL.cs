@@ -33,6 +33,7 @@ namespace WEB_API.DAL.Services
                 .Where(a => a.AppointmentDate == date)
                 .ToListAsync();
         }
+        
 
         public async Task DeleteAvailableAppointmentAsync(int id)
         {

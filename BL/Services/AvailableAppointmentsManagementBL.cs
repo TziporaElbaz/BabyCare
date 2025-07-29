@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using BL.API;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using WEB_API.BL.API;
 using WEB_API.BL.Models;
 using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
+using WEB_API.DAL.Services;
+using WEB_API.Services;
 
 namespace WEB_API.BL.Services
 {
@@ -17,6 +20,9 @@ namespace WEB_API.BL.Services
         private readonly IMapper _mapper;
         private readonly IAvailableAppointmentManagementDAL availableAppointmentManagementDAL;
         private readonly HttpClient _httpClient;
+        private readonly IWorkersManagmentDAL _workersManagmentDAL;
+        private readonly IVaccineManagementBL _vaccineManagementBL;
+        private readonly IBabyManagementBL _babyManagementBL;
 
         public AvailableAppointmentsManagementBL(
             IWorkerShiftManagementDAL shiftWorkerManager,
@@ -24,6 +30,9 @@ namespace WEB_API.BL.Services
             IConfiguration configuration,
             IMapper mapper,
             IAvailableAppointmentManagementDAL dal,
+            IWorkersManagmentDAL workersManagmentDAL,
+            IVaccineManagementBL vaccineManagementBL,
+            IBabyManagementBL babyManagementBL,
             HttpClient httpClient)
         {
             _shiftWorkerManager = shiftWorkerManager;
@@ -32,6 +41,9 @@ namespace WEB_API.BL.Services
             _mapper = mapper;
             availableAppointmentManagementDAL = dal;
             _httpClient = httpClient;
+            _vaccineManagementBL = vaccineManagementBL;
+            _workersManagmentDAL = workersManagmentDAL;
+            _babyManagementBL = babyManagementBL;
         }
 
         public async Task<bool> IsHoliday(DateTime date)
@@ -83,41 +95,41 @@ namespace WEB_API.BL.Services
             return appointments.Select(a => _mapper.Map<AvailableAppointmentDTO>(a)).ToList();
         }
 
-        //public async Task<List<AvailableAppointment>> findNurseAppointments(string babyId)
-        //{
-        //    // שלב 1: קבלת חיסונים שלא בוצעו
-        //    List<Vaccine> unvaccinatedVaccines = await _vaccineManagementBL.ListOfBabysUnvaccinatedVaccines(babyId);
+        public async Task<List<AvailableAppointment>> findNurseAppointments(string babyId)
+        {
+            // שלב 1: קבלת חיסונים שלא בוצעו
+            List<VaccineDTO> unvaccinatedVaccines = await _vaccineManagementBL.ListOfBabysUnvaccinatedVaccines(babyId);
 
-        //    if (unvaccinatedVaccines == null || !unvaccinatedVaccines.Any())
-        //        throw new Exception("No unvaccinated vaccines found for the given baby ID.");
+            if (unvaccinatedVaccines == null || !unvaccinatedVaccines.Any())
+                throw new Exception("No unvaccinated vaccines found for the given baby ID.");
 
-        //    // שלב 2: קביעת גיל התינוק
-        //    int babyAgeMonths = _babyManagementBL.GetBabysAge(babyId);
+            // שלב 2: קביעת גיל התינוק
+            int babyAgeMonths = _babyManagementBL.GetBabysAge(babyId);
 
-        //    // שלב 3: חישוב טווח גילאים לחיסונים
-        //    Vaccine firstVaccine = unvaccinatedVaccines.First();
-        //    int minAge = firstVaccine.MinAgeMonths;
-        //    int maxAge = firstVaccine.MaxAgeMonths;
-
-
-        //    DateTime earliestAppointmentDate = DateTime.Now.AddMonths(minAge - babyAgeMonths);
-        //    DateTime latestAppointmentDate = earliestAppointmentDate.AddMonths(1);
-        //    DateOnly earliestDate = DateOnly.FromDateTime(earliestAppointmentDate);
-        //    DateOnly latestDate = DateOnly.FromDateTime(earliestAppointmentDate.AddMonths(1));
+            // שלב 3: חישוב טווח גילאים לחיסונים
+            VaccineDTO firstVaccine = unvaccinatedVaccines.First();
+            int minAge = firstVaccine.MinAgeMonths;
+            int maxAge = firstVaccine.MaxAgeMonths;
 
 
-        //    // שלב 4: שליפת תורים מתאימים
-        //    var allNurseAppointments = await availableAppointmentManagementDAL.GetAppointmentsByWorkerType("nurse");
+            DateTime earliestAppointmentDate = DateTime.Now.AddMonths(minAge - babyAgeMonths);
+            DateTime latestAppointmentDate = earliestAppointmentDate.AddMonths(1);
+            DateOnly earliestDate = DateOnly.FromDateTime(earliestAppointmentDate);
+            DateOnly latestDate = DateOnly.FromDateTime(earliestAppointmentDate.AddMonths(1));
 
-        //    var appointmentsInRange = allNurseAppointments
-        //        .Where(a => a.AppointmentDate.CompareTo(earliestDate) >= 0 && a.AppointmentDate.CompareTo(latestDate.AddMonths(1)) <= 0)
-        //        .ToList();
 
-        //    if (!appointmentsInRange.Any())
-        //        throw new Exception("No available appointments found for the required time range.");
+            // שלב 4: שליפת תורים מתאימים
+            var allNurseAppointments = await availableAppointmentManagementDAL.GetAppointmentsByWorkerType("nurse");
 
-        //    return appointmentsInRange;
-        //}
+            var appointmentsInRange = allNurseAppointments
+                .Where(a => a.AppointmentDate.CompareTo(earliestDate) >= 0 && a.AppointmentDate.CompareTo(latestDate.AddMonths(1)) <= 0)
+                .ToList();
+
+            if (!appointmentsInRange.Any())
+                throw new Exception("No available appointments found for the required time range.");
+
+            return appointmentsInRange;
+        }
 
 
         //public async Task<List<AvailableAppointment>> findDoctorAppointments()
@@ -127,52 +139,52 @@ namespace WEB_API.BL.Services
         //         && a.AppointmentDate.ToDateTime(TimeOnly.MinValue) < DateTime.Now.AddMonths(1));
         //    return availableAppointments;
         //}
-        //public async Task<List<AvailableAppointment>> findPhysicalTherapistAppointments(string physiotherapistName, DateOnly startDate, int sessionsCount)
-        //{
+        public async Task<List<AvailableAppointment>> findPhysicalTherapistAppointments(string physiotherapistName, DateOnly startDate, int sessionsCount)
+        {
 
-        //    DateOnly endDate = startDate.AddMonths(1);
+            DateOnly endDate = startDate.AddMonths(1);
 
-        //    int workerId = await _workersManagmentDAL.getWorkerIdByName(physiotherapistName);
-        //    // Filter appointments by worker type, therapist name, and date range
-        //    var availableAppointments = (await availableAppointmentManagementDAL
-        //        .GetAppointmentsByWorkerType("physical Therapist"))
-        //        .FindAll(a =>
-        //            a.AppointmentDate >= startDate &&
-        //            a.AppointmentDate <= endDate && a.WorkerId == workerId
-        //        );
-        //    foreach (var firstAppointment in availableAppointments)
-        //    {
-        //        var candidateSeries = new List<AvailableAppointment> { firstAppointment };
-        //        bool seriesFound = true;
-        //        var currDate = firstAppointment.AppointmentDate;
-        //        var currHour = firstAppointment.StartTime;
+            int workerId = await _workersManagmentDAL.GetWorkerIdByName(physiotherapistName);
+            // Filter appointments by worker type, therapist name, and date range
+            var availableAppointments = (await availableAppointmentManagementDAL
+                .GetAppointmentsByWorkerType("physical Therapist"))
+                .FindAll(a =>
+                    a.AppointmentDate >= startDate &&
+                    a.AppointmentDate <= endDate && a.WorkerId == workerId
+                );
+            foreach (var firstAppointment in availableAppointments)
+            {
+                var candidateSeries = new List<AvailableAppointment> { firstAppointment };
+                bool seriesFound = true;
+                var currDate = firstAppointment.AppointmentDate;
+                var currHour = firstAppointment.StartTime;
 
-        //        for (int i = 1; i < sessionsCount; i++)
-        //        {
-        //            var nextDate = currDate.AddDays(7);
-        //            var nextAppointment = availableAppointments.FirstOrDefault(
-        //                a => a.AppointmentDate == nextDate && a.StartTime == currHour);
+                for (int i = 1; i < sessionsCount; i++)
+                {
+                    var nextDate = currDate.AddDays(7);
+                    var nextAppointment = availableAppointments.FirstOrDefault(
+                        a => a.AppointmentDate == nextDate && a.StartTime == currHour);
 
-        //            if (nextAppointment != null)
-        //            {
-        //                candidateSeries.Add(nextAppointment);
-        //                currDate = nextDate;
-        //            }
-        //            else
-        //            {
-        //                seriesFound = false;
-        //                break;
-        //            }
-        //        }
+                    if (nextAppointment != null)
+                    {
+                        candidateSeries.Add(nextAppointment);
+                        currDate = nextDate;
+                    }
+                    else
+                    {
+                        seriesFound = false;
+                        break;
+                    }
+                }
 
-        //        if (seriesFound)
-        //        {
-        //            return candidateSeries;
-        //        }
-        //    }
+                if (seriesFound)
+                {
+                    return candidateSeries;
+                }
+            }
 
-        //    return new List<AvailableAppointment>();
-        //}
+            return new List<AvailableAppointment>();
+        }
 
         public async Task<List<AvailableAppointmentDTO>> FindSpecificTypeOfAvailableAppointments(string worketType)
         {
@@ -256,5 +268,16 @@ namespace WEB_API.BL.Services
                 }
             }
         }
+        public async Task AddAvailableAppointmentsForNextYear()
+        {
+            DateTime startDate = DateTime.Today.AddDays(1);
+            DateTime endDate = startDate.AddYears(1);
+
+            for (DateTime date = startDate; date < endDate; date = date.AddDays(1))
+            {
+                await AddAvailableAppointmentsToAllWorkers(date); // זו פונקציה קיימת שלך
+            }
+        }
+       
     }
 }

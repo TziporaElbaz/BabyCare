@@ -61,7 +61,7 @@ namespace WEB_API.BL.Services
 
             //if (jwtToken == null || jwtToken.ValidTo > DateTime.UtcNow)
             if (jwtToken == null || jwtToken.ValidTo < DateTime.UtcNow)
-                throw new SecurityTokenException("Invalid token");
+                throw new SecurityTokenException("Invalid or expired token");
 
             var idClaim = jwtToken.Claims.First(claim => claim.Type == "id");
             var userTypeClaim = jwtToken.Claims.First(claim => claim.Type == "userType");
@@ -74,7 +74,7 @@ namespace WEB_API.BL.Services
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict,
+                SameSite = SameSiteMode.None,
                 Expires = DateTimeOffset.UtcNow.AddDays(7)
             });
         }
