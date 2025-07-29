@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        builder => builder.WithOrigins("https://localhost:3000")
+        builder => builder.WithOrigins("http://localhost:3000")
                           .AllowCredentials()
                           .AllowAnyMethod()
                           .AllowAnyHeader());
@@ -55,7 +55,6 @@ builder.Services.AddScoped<IBabyVaccineManagementBL, BabyVaccineManagementBL>();
 builder.Services.AddScoped<IMapper, Mapper>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddHttpClient();
-//builder.Services.AddHostedService<AppointmentBackgroundService>();
 
 //Add jwt secret key if empty
 if (string.IsNullOrEmpty(builder.Configuration["JwtSettings:Key"]))

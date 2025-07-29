@@ -1,7 +1,6 @@
-﻿
-using WEB_API.DAL.Models;
+﻿using WEB_API.DAL.Models;
 
-namespace WEB_API.DAL.Services
+namespace WEB_API.DAL.API
 {
     public interface IBabyVaccineManagementDAL
     {

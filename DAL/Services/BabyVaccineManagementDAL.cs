@@ -1,11 +1,6 @@
-﻿using WEB_API.DAL.Models;
+﻿using WEB_API.DAL.API;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using WEB_API.DAL.Models;
 
 namespace WEB_API.DAL.Services
 {
@@ -18,40 +13,48 @@ namespace WEB_API.DAL.Services
             _context = context;
         }
 
-        public async Task<BabyVaccine> CreateAsync(Baby baby, Vaccine vaccine)
+        public async Task<BabyVaccine> AddBabyVaccineAsync(Baby baby, Vaccine vaccine, DateOnly date)
         {
-            BabyVaccine babyVaccine = new BabyVaccine(baby, vaccine);
+            var babyVaccine = new BabyVaccine(baby, vaccine, date);
             _context.Set<BabyVaccine>().Add(babyVaccine);
             await _context.SaveChangesAsync();
             return babyVaccine;
-
         }
-        //שליפת כל החיסונים של תינוק מסוים
+
         public async Task<List<Vaccine>> GetVaccinesAsync(string babyId)
         {
             return await _context.Set<BabyVaccine>()
-                                 .Include(bv => bv.Baby) 
-                                 .Include(bv => bv.Vaccine) 
-                                 .Where(bv => bv.Baby.BabyId == babyId) 
+                                 .Include(bv => bv.Baby)
+                                 .Include(bv => bv.Vaccine)
+                                 .Where(bv => bv.Baby.BabyId == babyId)
                                  .Select(bv => bv.Vaccine)
-                                 .ToListAsync(); 
+                                 .ToListAsync();
         }
-        //שליפת כל החיסונים של התינוקות
-        public async Task<IEnumerable<BabyVaccine>> GetAllAsync()
+
+        public async Task<BabyVaccine?> GetBabyVaccineAsync(string babyId, int vaccineId)
+        {
+            return await _context.Set<BabyVaccine>()
+                                             .Include(bv => bv.Baby)
+                                             .Include(bv => bv.Vaccine)
+                                             .FirstOrDefaultAsync(bv => bv.Baby.BabyId == babyId && bv.VaccineId == vaccineId);
+        }
+
+        public async Task<IEnumerable<BabyVaccine>> GetAllVaccinesAsync()
         {
             return await _context.Set<BabyVaccine>()
                                  .Include(bv => bv.Baby)
                                  .Include(bv => bv.Vaccine)
                                  .ToListAsync();
         }
-        public async Task<BabyVaccine> UpdateAsync(BabyVaccine babyVaccine)
+
+        public async Task<BabyVaccine> UpdateVaccineAsync(BabyVaccine babyVaccine)
         {
             _context.Set<BabyVaccine>().Update(babyVaccine);
             await _context.SaveChangesAsync();
             return babyVaccine;
         }
 
-        public async Task DeleteAsync(string babyId, string vaccine)
+        public async Task DeleteVaccineAsync(string babyId, string vaccine)
         {
             var babyVaccine = await _context.Set<BabyVaccine>().FirstOrDefaultAsync(bv => bv.Baby.BabyId == babyId && bv.Vaccine.Name == vaccine);
             if (babyVaccine != null)

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using WEB_API.DAL.API;
 using WEB_API.BL.API;
 using WEB_API.BL.Models;
-using WEB_API.DAL.API;
 using WEB_API.DAL.Models;
-using WEB_API.DAL.Services;
 
 namespace WEB_API.BL.Services
 {
